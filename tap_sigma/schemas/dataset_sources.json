@@ -1,0 +1,30 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "type",
+    "inodeId"
+  ],
+  "properties": {
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inodeId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "datasetId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-version: 1
+requires_meltano: ">=4"
 send_anonymous_usage_stats: false
 project_id: tap-sigma-dev
 
@@ -11,6 +11,9 @@ plugins:
     - catalog
     - state
     - discover
+    - batch
+    - stream-maps
+    - structured-logging
     settings:
     - name: client_id
       kind: password

@@ -1,0 +1,163 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the workbook.",
+      "title": "Workbook ID"
+    },
+    "workbookUrlId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latestVersion": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "ownerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this object."
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this object."
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was created."
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was last updated."
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "tags": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "required": [
+          "versionTagId",
+          "name",
+          "sourceWorkbookVersion",
+          "taggedWorkbookId",
+          "workbookTaggedAt"
+        ],
+        "properties": {
+          "versionTagId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique identifier of the tag.",
+            "title": "Tag ID"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceWorkbookVersion": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "taggedWorkbookId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique identifier of the tagged workbook.",
+            "title": "Workbook ID"
+          },
+          "workbookTaggedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "createdAt",
+    "createdBy",
+    "latestVersion",
+    "name",
+    "ownerId",
+    "path",
+    "updatedAt",
+    "updatedBy",
+    "url",
+    "workbookId",
+    "workbookUrlId"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "grantId",
+    "inodeId",
+    "organizationId",
+    "memberId",
+    "teamId",
+    "permission",
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "grantId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the grant"
+    },
+    "inodeId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the inode"
+    },
+    "organizationId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the organization"
+    },
+    "memberId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the member"
+    },
+    "teamId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the team"
+    },
+    "permission": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this grant"
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this grant"
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the grant was created"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the grant was last updated"
+    },
+    "datasetId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "title": "Connection grant response"
+}

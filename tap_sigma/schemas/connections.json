@@ -1,0 +1,378 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "organizationId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the organization"
+    },
+    "connectionId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the connection"
+    },
+    "isSample": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether the connection is the Sigma sample data connection"
+    },
+    "isAuditLog": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether audit logging is enabled"
+    },
+    "lastActiveAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "Last activity date and time"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Name of the connection"
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Type of the connection (e.g., \"bigQuery\")"
+    },
+    "useOauth": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether OAuth is used"
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier of the user who created this connection"
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier of the user or process that last updated this connection"
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the connection was created"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the connection was last updated"
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether the connection is archived"
+    },
+    "account": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Account associated with the connection"
+    },
+    "warehouse": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Warehouse associated with the connection"
+    },
+    "user": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User associated with the connection"
+    },
+    "role": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Role used by the connection user"
+    },
+    "timeout": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "default": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "worksheet": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "dashboard": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "download": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "poolSizes": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "isPoolConfigured": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "adhocPoolSize": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "catalogPoolSize": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "resultPoolSize": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "schedulePoolSize": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "description": "Pool sizes for the connection, such as for adhocPoolSize or schedulePoolSize"
+    },
+    "writeAccess": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "friendlyName": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether friendly names are enabled for this connection"
+    },
+    "writebacks": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "required": [
+          "database",
+          "schema"
+        ],
+        "properties": {
+          "database": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Database, catalog, or top-level object to contain tables written back to the data platform"
+          },
+          "schema": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Schema, database, or second-level object to contain tables written back to the data platform"
+          },
+          "writebackSchemaId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique identifier of the writebackSchema"
+          }
+        }
+      },
+      "description": "Configure write-back for non-OAuth connections"
+    },
+    "writebackSchemas": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "required": [
+          "database",
+          "schema"
+        ],
+        "properties": {
+          "database": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Database, catalog, or top-level object to contain tables written back to the data platform"
+          },
+          "schema": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Schema, database, or second-level object to contain tables written back to the data platform"
+          },
+          "writebackSchemaId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique identifier of the writebackSchema"
+          }
+        }
+      },
+      "description": "Configure write-back for OAuth connections"
+    },
+    "inputTableAuditLogSchema": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "database",
+        "schema"
+      ],
+      "properties": {
+        "database": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Database, catalog, or top-level object to contain tables written back to the data platform"
+        },
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Schema, database, or second-level object to contain tables written back to the data platform"
+        },
+        "writebackSchemaId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Unique identifier of the writebackSchema"
+        }
+      }
+    },
+    "materializationWarehouse": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Warehouse used to run materialization jobs"
+    },
+    "userAttributes": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warehouse": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "description": "User attributes associated with the connection"
+    },
+    "host": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "connectionId",
+    "createdAt",
+    "createdBy",
+    "isAuditLog",
+    "isSample",
+    "lastActiveAt",
+    "name",
+    "organizationId",
+    "type",
+    "updatedAt",
+    "updatedBy",
+    "useOauth"
+  ]
+}

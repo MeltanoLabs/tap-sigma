@@ -1,0 +1,84 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "status",
+    "finishedAt",
+    "error",
+    "runtimeSecs",
+    "numRows",
+    "numBytes"
+  ],
+  "properties": {
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "finishedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "errorCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "runtimeSecs": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "numRows": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "numBytes": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "datasetId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "title": "Materialization result"
+}

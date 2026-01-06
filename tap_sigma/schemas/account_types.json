@@ -1,0 +1,42 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "accountTypeId",
+    "accountTypeName",
+    "description",
+    "isCustom"
+  ],
+  "properties": {
+    "accountTypeId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier of the account type."
+    },
+    "accountTypeName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The name of the account type."
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "A human-readable description of the permissions and capabilities provided by this account type."
+    },
+    "isCustom": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether this is a custom account type created by the organization (true) or a default Sigma account type (false)."
+    }
+  }
+}

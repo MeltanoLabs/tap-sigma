@@ -1,27 +1,49 @@
 """Stream definitions for Sigma Computing API."""
 
-from typing import Any, Dict, Optional
+from __future__ import annotations
 
-from singer_sdk import typing as th
+import sys
+from importlib import resources
+from typing import TYPE_CHECKING, Any
 
+from singer_sdk import SchemaDirectory, StreamSchema
+from singer_sdk.pagination import SinglePagePaginator
+
+from tap_sigma import schemas as schemas_module
 from tap_sigma.client import SigmaStream
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+if TYPE_CHECKING:
+    from singer_sdk.helpers.types import Context, Record
+
+
+SCHEMAS = SchemaDirectory(resources.files(schemas_module))
 
 
 class AccountTypesStream(SigmaStream):
     """Account types stream."""
 
     name = "account_types"
-    path = "/v2/account-types"
-    primary_keys = ["accountTypeId"]
+    path = "/v2/accountTypes"
+    next_page_token_jsonpath = "$.nextPageToken"  # noqa: S105
+    primary_keys = ("accountTypeId",)
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
-    schema = th.PropertiesList(
-        th.Property("accountTypeId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+    @override
+    def get_url_params(  # ty:ignore[invalid-method-override]
+        self,
+        context: Context | None = None,
+        next_page_token: str | None = None,  # type: ignore[override]
+    ) -> dict[str, Any]:
+        return {
+            "pageToken": next_page_token,
+            "pageSize": 1000,
+        }
 
 
 class ConnectionsStream(SigmaStream):
@@ -29,27 +51,9 @@ class ConnectionsStream(SigmaStream):
 
     name = "connections"
     path = "/v2/connections"
-    primary_keys = ["connectionId"]
+    primary_keys = ("connectionId",)
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("connectionId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-        th.Property("host", th.StringType),
-        th.Property("port", th.IntegerType),
-        th.Property("database", th.StringType),
-        th.Property("schema", th.StringType),
-        th.Property("warehouse", th.StringType),
-        th.Property("role", th.StringType),
-        th.Property("account", th.StringType),
-        th.Property("useOAuth", th.BooleanType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class DatasetsStream(SigmaStream):
@@ -57,25 +61,17 @@ class DatasetsStream(SigmaStream):
 
     name = "datasets"
     path = "/v2/datasets"
-    primary_keys = ["datasetId"]
+    primary_keys = ("datasetId",)
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
-    schema = th.PropertiesList(
-        th.Property("datasetId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-        th.Property("connectionId", th.StringType),
-        th.Property("badge", th.StringType),
-        th.Property("isSample", th.BooleanType),
-    ).to_dict()
-
-    def get_child_context(self, record: dict, context: Optional[Dict] = None) -> dict:
+    @override
+    def get_child_context(
+        self,
+        record: Record,
+        context: Context | None = None,
+    ) -> Context | None:
         """Return context for child streams."""
-        _ = context  # Unused
         return {"datasetId": record["datasetId"]}
 
 
@@ -83,19 +79,10 @@ class DataModelsStream(SigmaStream):
     """Data models stream."""
 
     name = "data_models"
-    path = "/v2/data-models"
-    primary_keys = ["dataModelId"]
+    path = "/v2/dataModels"
+    primary_keys = ("dataModelId",)
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("dataModelId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class MembersStream(SigmaStream):
@@ -103,19 +90,18 @@ class MembersStream(SigmaStream):
 
     name = "members"
     path = "/v2/members"
-    primary_keys = ["memberId"]
+    primary_keys = ("memberId",)
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
-    schema = th.PropertiesList(
-        th.Property("memberId", th.StringType),
-        th.Property("email", th.StringType),
-        th.Property("firstName", th.StringType),
-        th.Property("lastName", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("isActive", th.BooleanType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+    @override
+    def get_url_params(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        """Get URL parameters."""
+        return {
+            **super().get_url_params(*args, **kwargs),
+            "includeArchived": "true",
+            "includeInactive": "true",
+        }
 
 
 class TeamsStream(SigmaStream):
@@ -123,18 +109,9 @@ class TeamsStream(SigmaStream):
 
     name = "teams"
     path = "/v2/teams"
-    primary_keys = ["teamId"]
+    primary_keys = ("teamId",)
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("teamId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class FilesStream(SigmaStream):
@@ -142,25 +119,9 @@ class FilesStream(SigmaStream):
 
     name = "files"
     path = "/v2/files"
-    primary_keys = ["id"]  # Use 'id' which is actually returned by the API
+    primary_keys = ("id",)  # Use 'id' which is actually returned by the API
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("id", th.StringType),  # Actual field from API
-        th.Property("urlId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("path", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-        th.Property("parentId", th.StringType),
-        th.Property("badge", th.StringType),
-        th.Property("permission", th.StringType),
-        th.Property("ownerId", th.StringType),
-        th.Property("isArchived", th.BooleanType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class WorkbooksStream(SigmaStream):
@@ -168,91 +129,19 @@ class WorkbooksStream(SigmaStream):
 
     name = "workbooks"
     path = "/v2/workbooks"
-    primary_keys = ["workbookId"]
+    primary_keys = ("workbookId",)
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
-    schema = th.PropertiesList(
-        th.Property("workbookId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("url", th.StringType),
-        th.Property("path", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-        th.Property("latestVersion", th.IntegerType),
-        th.Property("badge", th.StringType),
-    ).to_dict()
-
-    def get_child_context(self, record: dict, context: Optional[Dict] = None) -> dict:
+    @override
+    def get_child_context(
+        self,
+        record: Record,
+        context: Context | None = None,
+    ) -> Context | None:
         """Return context for child streams."""
         _ = context  # Unused
         return {"workbookId": record["workbookId"]}
-
-
-class WorkbookPagesStream(SigmaStream):
-    """Workbook pages stream (child of workbooks)."""
-
-    name = "workbook_pages"
-    primary_keys = ["workbookId", "pageId"]
-    replication_key = None
-    parent_stream_type = WorkbooksStream
-
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/workbooks/{workbookId}/pages"
-
-    def get_url_params(
-        self,
-        context: Optional[Dict] = None,
-        next_page_token: Optional[int] = None,
-    ) -> Dict[str, Any]:
-        """Get URL parameters including parent context."""
-        params = super().get_url_params(context, next_page_token)
-        return params
-
-    schema = th.PropertiesList(
-        th.Property("workbookId", th.StringType),
-        th.Property("pageId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
-
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add workbookId from context to each page record."""
-        if context and "workbookId" in context:
-            row["workbookId"] = context["workbookId"]
-        return row
-
-    def get_child_context(self, record: dict, context: Optional[Dict] = None) -> dict:
-        """Return context for child streams (page elements)."""
-        return {
-            "workbookId": record.get("workbookId") or (context or {}).get("workbookId"),
-            "pageId": record["pageId"]
-        }
-
-
-class FavoritesStream(SigmaStream):
-    """Favorites stream."""
-
-    name = "favorites"
-    path = "/v2/favorites"
-    primary_keys = ["favoriteId"]
-    replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("favoriteId", th.StringType),
-        th.Property("inodeId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("url", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-    ).to_dict()
 
 
 class TagsStream(SigmaStream):
@@ -260,18 +149,9 @@ class TagsStream(SigmaStream):
 
     name = "tags"
     path = "/v2/tags"
-    primary_keys = ["tagId"]
+    primary_keys = ("tagId",)
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("tagId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("inodeId", th.StringType),
-        th.Property("version", th.IntegerType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class UserAttributesStream(SigmaStream):
@@ -279,37 +159,9 @@ class UserAttributesStream(SigmaStream):
 
     name = "user_attributes"
     path = "/v2/user-attributes"
-    primary_keys = ["userAttributeId"]
+    primary_keys = ("userAttributeId",)
     replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("userAttributeId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("defaultValue", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
-
-
-class WhoAmIStream(SigmaStream):
-    """WhoAmI stream - returns current authenticated user info."""
-
-    name = "whoami"
-    path = "/v2/whoami"
-    primary_keys = ["memberId"]
-    replication_key = None
-
-    schema = th.PropertiesList(
-        th.Property("memberId", th.StringType),
-        th.Property("email", th.StringType),
-        th.Property("firstName", th.StringType),
-        th.Property("lastName", th.StringType),
-        th.Property("organizationId", th.StringType),
-        th.Property("organizationName", th.StringType),
-    ).to_dict()
+    schema = StreamSchema(SCHEMAS)
 
 
 class WorkspacesStream(SigmaStream):
@@ -317,18 +169,29 @@ class WorkspacesStream(SigmaStream):
 
     name = "workspaces"
     path = "/v2/workspaces"
-    primary_keys = ["workspaceId"]
+    primary_keys = ("workspaceId",)
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
-    schema = th.PropertiesList(
-        th.Property("workspaceId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("description", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedBy", th.StringType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+
+class TemplatesStream(SigmaStream):
+    """Templates stream."""
+
+    name = "templates"
+    path = "/v2/templates"
+    primary_keys = ("templateId",)
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+
+
+class TranslationFilesStream(SigmaStream):
+    """Translation files stream."""
+
+    name = "translation_files"
+    path = "/v2/translations/organization"
+    primary_keys = ("lng",)
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
 
 
 # Dataset child streams
@@ -336,179 +199,98 @@ class DatasetMaterializationsStream(SigmaStream):
     """Dataset materializations stream."""
 
     name = "dataset_materializations"
-    primary_keys = ["datasetId"]  # No unique materializationId in API response
+    path = "/v2/datasets/{datasetId}/materialization"
+    primary_keys = ("datasetId", "finishedAt")
     replication_key = None
     parent_stream_type = DatasetsStream
-
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/datasets/{datasetId}/materialization"
-
-    schema = th.PropertiesList(
-        th.Property("datasetId", th.StringType),
-        th.Property("status", th.StringType),
-        th.Property("error", th.StringType),
-        th.Property("finishedAt", th.DateTimeType),
-        th.Property("runtimeSecs", th.NumberType),
-        th.Property("numBytes", th.IntegerType),
-        th.Property("numRows", th.IntegerType),
-    ).to_dict()
-
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add datasetId from context to each record."""
-        if context and "datasetId" in context:
-            row["datasetId"] = context["datasetId"]
-        return row
+    schema = StreamSchema(SCHEMAS)
 
 
 class DatasetGrantsStream(SigmaStream):
     """Dataset grants stream."""
 
     name = "dataset_grants"
-    primary_keys = ["datasetId", "grantId"]
+    path = "/v2/datasets/{datasetId}/grants"
+    primary_keys = ("datasetId", "grantId")
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
     parent_stream_type = DatasetsStream
-
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/datasets/{datasetId}/grants"
-
-    schema = th.PropertiesList(
-        th.Property("datasetId", th.StringType),
-        th.Property("grantId", th.StringType),
-        th.Property("grantee", th.StringType),
-        th.Property("granteeType", th.StringType),
-        th.Property("role", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-    ).to_dict()
-
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add datasetId from context to each record."""
-        if context and "datasetId" in context:
-            row["datasetId"] = context["datasetId"]
-        return row
 
 
 class DatasetSourcesStream(SigmaStream):
     """Dataset sources stream."""
 
     name = "dataset_sources"
-    primary_keys = ["datasetId", "sourceId"]
+    records_jsonpath = "$[*]"
+    path = "/v2/datasets/{datasetId}/sources"
+    primary_keys = ("datasetId", "inodeId")
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
     parent_stream_type = DatasetsStream
 
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/datasets/{datasetId}/sources"
+    @override
+    def get_new_paginator(self) -> SinglePagePaginator:
+        """Get a new paginator."""
+        return SinglePagePaginator()
 
-    schema = th.PropertiesList(
-        th.Property("datasetId", th.StringType),
-        th.Property("sourceId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("connectionId", th.StringType),
-    ).to_dict()
-
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add datasetId from context to each record."""
-        if context and "datasetId" in context:
-            row["datasetId"] = context["datasetId"]
-        return row
+    @override
+    def get_url_params(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        """Get URL parameters."""
+        return {}  # This endpoint expects empty NO QUERY PARAMS
 
 
 # Workbook child streams
-class WorkbookSchedulesStream(SigmaStream):
-    """Workbook schedules stream."""
-
-    name = "workbook_schedules"
-    primary_keys = ["workbookId", "scheduleId"]
-    replication_key = None
-    parent_stream_type = WorkbooksStream
-
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/workbooks/{workbookId}/schedules"
-
-    schema = th.PropertiesList(
-        th.Property("workbookId", th.StringType),
-        th.Property("scheduleId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("schedule", th.StringType),
-        th.Property("createdBy", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
-
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add workbookId from context to each record."""
-        if context and "workbookId" in context:
-            row["workbookId"] = context["workbookId"]
-        return row
-
-
 class WorkbookMaterializationSchedulesStream(SigmaStream):
     """Workbook materialization schedules stream."""
 
     name = "workbook_materialization_schedules"
-    primary_keys = ["workbookId", "scheduleId"]
+    path = "/v2/workbooks/{workbookId}/materialization-schedules"
+    primary_keys = ("workbookId", "sheetId")
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
 
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/workbooks/{workbookId}/materialization-schedules"
 
-    schema = th.PropertiesList(
-        th.Property("workbookId", th.StringType),
-        th.Property("scheduleId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("schedule", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+class WorkbookPagesStream(SigmaStream):
+    """Workbook pages stream (child of workbooks)."""
 
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add workbookId from context to each record."""
-        if context and "workbookId" in context:
-            row["workbookId"] = context["workbookId"]
-        return row
+    name = "workbook_pages"
+    path = "/v2/workbooks/{workbookId}/pages"
+    primary_keys = ("workbookId", "pageId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+    @override
+    def get_child_context(
+        self,
+        record: Record,
+        context: Context | None = None,
+    ) -> Context | None:
+        """Return context for child streams (page elements)."""
+        return {
+            "workbookId": record["workbookId"],
+            "pageId": record["pageId"],
+        }
 
 
 class WorkbookPageElementsStream(SigmaStream):
     """Workbook page elements stream."""
 
     name = "workbook_page_elements"
-    primary_keys = ["workbookId", "pageId", "elementId"]
+    path = "/v2/workbooks/{workbookId}/pages/{pageId}/elements"
+    primary_keys = ("workbookId", "pageId", "elementId")
     replication_key = None
+    schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbookPagesStream
 
-    @property
-    def path(self) -> str:
-        """Return the path for this stream."""
-        return "/v2/workbooks/{workbookId}/pages/{pageId}/elements"
 
-    schema = th.PropertiesList(
-        th.Property("workbookId", th.StringType),
-        th.Property("pageId", th.StringType),
-        th.Property("elementId", th.StringType),
-        th.Property("name", th.StringType),
-        th.Property("type", th.StringType),
-        th.Property("vizualizationType", th.StringType),
-        th.Property("createdAt", th.DateTimeType),
-        th.Property("updatedAt", th.DateTimeType),
-    ).to_dict()
+class WorkbookSchedulesStream(SigmaStream):
+    """Workbook schedules stream."""
 
-    def post_process(self, row: dict, context: Optional[Dict] = None) -> dict:
-        """Add workbookId and pageId from context to each record."""
-        if context:
-            if "workbookId" in context:
-                row["workbookId"] = context["workbookId"]
-            if "pageId" in context:
-                row["pageId"] = context["pageId"]
-        return row
+    name = "workbook_schedules"
+    path = "/v2/workbooks/{workbookId}/schedules"
+    primary_keys = ("workbookId", "scheduledNotificationId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream

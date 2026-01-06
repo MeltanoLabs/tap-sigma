@@ -1,0 +1,141 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "dataModelId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the data model.",
+      "title": "Data model ID"
+    },
+    "dataModelUrlId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latestVersion": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "ownerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this object."
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this object."
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was created."
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was last updated."
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "tags": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "required": [
+          "versionTagId",
+          "tagName",
+          "sourceVersion",
+          "taggedAt"
+        ],
+        "properties": {
+          "versionTagId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique identifier of the tag.",
+            "title": "Tag ID"
+          },
+          "tagName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceVersion": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "taggedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

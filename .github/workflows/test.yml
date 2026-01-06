@@ -4,71 +4,82 @@ on:
   push:
     branches: [main, develop]
   pull_request:
-    branches: [main, develop]
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: 1
+
+permissions: {}
 
 jobs:
   test:
+    name: Integration tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: latest
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
 
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
-
-      - name: Install project
-        run: poetry install --no-interaction
+        run: uv sync --group testing
 
       - name: Run tests
+        env:
+          TAP_SIGMA_API_URL: ${{ secrets.TAP_SIGMA_API_URL }}
+          TAP_SIGMA_CLIENT_ID: ${{ secrets.TAP_SIGMA_CLIENT_ID }}
+          TAP_SIGMA_CLIENT_SECRET: ${{ secrets.TAP_SIGMA_CLIENT_SECRET }}
         run: |
-          poetry run pytest
-
-      - name: Check code formatting with black
-        run: |
-          poetry run black --check tap_sigma tests || true
+          uv run pytest
 
   lint:
+    name: Linting
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
         with:
-          python-version: "3.10"
+          python-version-file: .python-version
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - name: Install uv
+        uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
 
       - name: Install dependencies
-        run: poetry install
+        run: uv sync --group typing --group lint
 
-      - name: Run flake8
+      - name: Run Ruff
         run: |
-          poetry run flake8 tap_sigma --count --select=E9,F63,F7,F82 --show-source --statistics || true
-          poetry run flake8 tap_sigma --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics || true
+          uv run ruff check tap_sigma tests scripts
+          uv run ruff format --check tap_sigma tests scripts
+
+      - name: Run Mypy
+        run: |
+          uv run mypy tap_sigma tests scripts
+
+      - name: Run ty
+        run: |
+          uv run ty check tap_sigma tests scripts

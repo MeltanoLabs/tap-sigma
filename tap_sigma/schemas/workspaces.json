@@ -1,0 +1,55 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "workspaceId",
+    "name",
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "workspaceId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  },
+  "title": "Workspace details"
+}

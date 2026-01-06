@@ -1,0 +1,94 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "userAttributeId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the user attribute."
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Name of the user attribute."
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this object."
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this object."
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was created."
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was last updated."
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Description of the user attribute."
+    },
+    "defaultValue": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "val",
+        "type"
+      ],
+      "properties": {
+        "val": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Value of the user attribute."
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Type of user attribute."
+        }
+      },
+      "description": "Default value of the user attribute."
+    }
+  },
+  "required": [
+    "createdAt",
+    "createdBy",
+    "name",
+    "updatedAt",
+    "updatedBy",
+    "userAttributeId"
+  ]
+}

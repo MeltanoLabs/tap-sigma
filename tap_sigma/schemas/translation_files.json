@@ -1,0 +1,71 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "lng",
+    "locale",
+    "lng_variant",
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "lng": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The locale identifier corresponding to the language of the translation.",
+      "title": "Locale identifier"
+    },
+    "locale": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The corrected locale identifier corresponding to the language of the translation. This identifier can be used in Sigma's query parameters (ex. `:lng=en-gb`)",
+      "title": "Locale identifier"
+    },
+    "lng_variant": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The name of the custom translation variant, if applicable",
+      "title": "Variant name"
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The user ID of the creator"
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The user ID of the last updater"
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "The creation timestamp"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "The last update timestamp"
+    }
+  }
+}
