@@ -1,0 +1,36 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "pageId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the workbook page."
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hidden": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "pageId"
+  ]
+}

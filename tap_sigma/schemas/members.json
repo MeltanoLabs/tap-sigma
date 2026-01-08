@@ -1,0 +1,118 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "organizationId",
+    "memberId",
+    "memberType",
+    "firstName",
+    "lastName",
+    "email",
+    "profileImgUrl",
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt",
+    "homeFolderId",
+    "userKind"
+  ],
+  "properties": {
+    "organizationId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "memberId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "memberType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "firstName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "email": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "profileImgUrl": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "homeFolderId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ID of the My Documents folder for the user"
+    },
+    "userKind": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether a user is deactivated in Sigma."
+    },
+    "isInactive": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Whether a user is archived by SCIM."
+    }
+  }
+}

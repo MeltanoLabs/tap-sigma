@@ -1,11 +1,25 @@
 """Sigma Computing tap class."""
 
-from typing import List
+from __future__ import annotations
+
+import sys
 
 from singer_sdk import Stream, Tap
 from singer_sdk import typing as th
 
 from tap_sigma import streams
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
+
+try:
+    import requests_cache
+
+    requests_cache.install_cache()
+except ImportError:
+    pass
 
 
 class TapSigma(Tap):
@@ -44,32 +58,33 @@ class TapSigma(Tap):
         ),
     ).to_dict()
 
-    def discover_streams(self) -> List[Stream]:
-        """Return a list of discovered streams.
-
-        Only includes streams that are verified working in Sigma API v2.
-        Excluded (404/400 errors): account-types, data-models, favorites, whoami, grants
-        """
+    @override
+    def discover_streams(self) -> list[Stream]:
+        """Return a list of discovered streams."""
         return [
             # Top-level streams
+            streams.AccountTypesStream(self),
             streams.ConnectionsStream(self),
             streams.DatasetsStream(self),
+            streams.DataModelsStream(self),
             streams.FilesStream(self),
             streams.MembersStream(self),
             streams.TagsStream(self),
             streams.TeamsStream(self),
+            streams.TemplatesStream(self),
+            streams.TranslationFilesStream(self),
             streams.UserAttributesStream(self),
             streams.WorkbooksStream(self),
-            streams.WorkbookPagesStream(self),
             streams.WorkspacesStream(self),
             # Dataset child streams
-            streams.DatasetMaterializationsStream(self),
             streams.DatasetGrantsStream(self),
+            streams.DatasetMaterializationsStream(self),
             streams.DatasetSourcesStream(self),
             # Workbook child streams
-            streams.WorkbookSchedulesStream(self),
             streams.WorkbookMaterializationSchedulesStream(self),
+            streams.WorkbookPagesStream(self),
             streams.WorkbookPageElementsStream(self),
+            streams.WorkbookSchedulesStream(self),
         ]
 
 

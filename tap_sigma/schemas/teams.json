@@ -1,0 +1,74 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "teamId",
+    "createdBy",
+    "updatedBy",
+    "createdAt",
+    "updatedAt",
+    "name",
+    "description",
+    "visibility"
+  ],
+  "properties": {
+    "teamId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "visibility": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  }
+}

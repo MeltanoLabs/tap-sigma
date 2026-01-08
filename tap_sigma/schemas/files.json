@@ -1,0 +1,170 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "urlId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parentId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parentUrlId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "permission": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "create"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "annotate"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "organize"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "explore"
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "view"
+              ]
+            },
+            {
+              "type": "string",
+              "enum": [
+                "edit"
+              ]
+            },
+            {
+              "type": "string",
+              "enum": [
+                "apply"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "badge": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ownerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this object."
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this object."
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was created."
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was last updated."
+    }
+  },
+  "required": [
+    "badge",
+    "createdAt",
+    "createdBy",
+    "id",
+    "isArchived",
+    "name",
+    "parentId",
+    "parentUrlId",
+    "path",
+    "permission",
+    "type",
+    "updatedAt",
+    "updatedBy",
+    "urlId"
+  ]
+}

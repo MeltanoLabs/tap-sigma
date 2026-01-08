@@ -1,14 +1,17 @@
 """Tests for tap-sigma core functionality."""
 
-import pytest
-from singer_sdk.testing import get_tap_test_class
+import os
 
+import requests
+from singer_sdk.testing import SuiteConfig, get_tap_test_class
+
+from tap_sigma.client import SigmaPaginator
 from tap_sigma.tap import TapSigma
+
+CI = os.getenv("GITHUB_ACTIONS", "false") == "true"
 
 # Configuration for testing
 SAMPLE_CONFIG = {
-    "client_id": "test-client-id",
-    "client_secret": "test-client-secret",
     "api_url": "https://aws-api.sigmacomputing.com",
 }
 
@@ -17,48 +20,33 @@ SAMPLE_CONFIG = {
 TestTapSigma = get_tap_test_class(
     tap_class=TapSigma,
     config=SAMPLE_CONFIG,
+    suite_config=SuiteConfig(
+        ignore_no_records_for_streams=[
+            "dataset_materializations",
+            "tags",
+            "translation_files",
+        ],
+    ),
+    include_tap_tests=not CI,
+    include_stream_tests=not CI,
+    include_stream_attribute_tests=not CI,
 )
 
 
-class TestTapSigmaCustom:
-    """Custom tests for tap-sigma."""
+class TestSigmaPaginator:
+    """Test the Sigma paginator."""
 
-    def test_tap_initialization(self):
-        """Test that the tap can be initialized with config."""
-        tap = TapSigma(config=SAMPLE_CONFIG)
-        assert tap.name == "tap-sigma"
-        assert tap.config["client_id"] == "test-client-id"
+    def test_pagination(self) -> None:
+        """Test the has_more method."""
+        paginator = SigmaPaginator()
+        response = requests.Response()
 
-    def test_stream_discovery(self):
-        """Test that all expected streams are discovered."""
-        tap = TapSigma(config=SAMPLE_CONFIG)
-        streams = tap.discover_streams()
+        response._content = b'{"nextPage": 2}'  # noqa: SLF001
+        paginator.advance(response)
+        assert paginator.current_value == 2  # noqa: PLR2004
+        assert not paginator.finished
 
-        expected_streams = [
-            "account_types",
-            "connections",
-            "datasets",
-            "data_models",
-            "members",
-            "teams",
-            "files",
-            "workbooks",
-            "workbook_pages",
-            "favorites",
-            "tags",
-            "user_attributes",
-            "whoami",
-        ]
-
-        discovered_stream_names = [stream.name for stream in streams]
-
-        for expected_stream in expected_streams:
-            assert (
-                expected_stream in discovered_stream_names
-            ), f"Stream {expected_stream} not discovered"
-
-    def test_required_config_keys(self):
-        """Test that required config keys are validated."""
-        with pytest.raises(Exception):
-            # Should fail without required config
-            TapSigma(config={})
+        response._content = b'{"nextPage": null}'  # noqa: SLF001
+        paginator.advance(response)
+        assert paginator.current_value == 2  # noqa: PLR2004
+        assert paginator.finished

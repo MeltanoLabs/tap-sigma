@@ -1,0 +1,2746 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "scheduledNotificationId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schedule": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "cronSpec",
+        "timezone"
+      ],
+      "properties": {
+        "cronSpec": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A [cron expression](https://en.wikipedia.org/wiki/Cron). For example, `0 0 * * *`."
+        },
+        "timezone": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "An [IANA timezone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For example, `America/Los_Angeles`."
+        }
+      }
+    },
+    "configV2": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "title",
+        "messageBody",
+        "notificationAttachments"
+      ],
+      "properties": {
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "messageBody": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notificationAttachments": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "formatOptions"
+            ],
+            "properties": {
+              "formatOptions": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "CSV"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "JSON"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "JSONL"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "EXCEL"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "type"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "PDF"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "layout": {
+                            "type": "string",
+                            "enum": [
+                              "portrait",
+                              "landscape"
+                            ]
+                          },
+                          "scaleFactor": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "type"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "PNG"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "pixelWidth": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "pixelHeight": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "NONE"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "chartId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "workbookExportSource": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "elementId"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "element"
+                        ]
+                      },
+                      "elementId": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Export one element",
+                    "title": "One element"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "pageId"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "page"
+                        ]
+                      },
+                      "pageId": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Export one page",
+                    "title": "One page"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "nodeIds"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "element"
+                        ]
+                      },
+                      "nodeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "Export multiple elements",
+                    "title": "Multiple elements"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "nodeIds"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "page"
+                        ]
+                      },
+                      "nodeIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "Export multiple pages",
+                    "title": "Multiple pages"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "all"
+                        ]
+                      }
+                    },
+                    "description": "Export all pages and elements in a workbook",
+                    "title": "Entire workbook"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "includeLink": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "runAsRecipient": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "attachmentSettings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "mergePdfAttachments": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "zipAttachments": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        },
+        "conditionOptions": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "always"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "conditions"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "workbook"
+                  ]
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "sheetId"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isEmpty"
+                            ]
+                          },
+                          "sheetId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "sheetId"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isNotEmpty"
+                            ]
+                          },
+                          "sheetId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "sheetId",
+                              "mode",
+                              "columnId",
+                              "op"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "sheetColumn"
+                                ]
+                              },
+                              "sheetId": {
+                                "type": "string"
+                              },
+                              "mode": {
+                                "oneOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "any"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "all"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "columnId": {
+                                "type": "string"
+                              },
+                              "op": {
+                                "type": "string",
+                                "enum": [
+                                  "Equals",
+                                  "GreaterThan",
+                                  "GreaterThanEq",
+                                  "LessThan",
+                                  "LessThanEq",
+                                  "NotEquals",
+                                  "IsNotNull",
+                                  "IsNull",
+                                  "Contains",
+                                  "StartsWith",
+                                  "EndsWith"
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "null"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "bool"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "number"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "integer"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "datetime"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "error"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "record"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "array"
+                                        ]
+                                      },
+                                      "val": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "boolArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "boolean",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "numberArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bigintArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "stringArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "datetimeArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bytesArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "variantArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variant"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "type": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "conditions"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "worksheet"
+                  ]
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "type"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isEmpty"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "type"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isNotEmpty"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "mode",
+                              "columnId",
+                              "op"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "queryColumn"
+                                ]
+                              },
+                              "mode": {
+                                "oneOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "any"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "all"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "columnId": {
+                                "type": "string"
+                              },
+                              "op": {
+                                "type": "string",
+                                "enum": [
+                                  "Equals",
+                                  "GreaterThan",
+                                  "GreaterThanEq",
+                                  "LessThan",
+                                  "LessThanEq",
+                                  "NotEquals",
+                                  "IsNotNull",
+                                  "IsNull",
+                                  "Contains",
+                                  "StartsWith",
+                                  "EndsWith"
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "null"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "bool"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "number"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "integer"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "datetime"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "error"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "record"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "array"
+                                        ]
+                                      },
+                                      "val": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "boolArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "boolean",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "numberArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bigintArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "stringArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "datetimeArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bytesArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "variantArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variant"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "type": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "conditions"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "dashboard"
+                  ]
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "tileId"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isEmpty"
+                            ]
+                          },
+                          "tileId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "tileId"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "isNotEmpty"
+                            ]
+                          },
+                          "tileId": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "tileId",
+                              "mode",
+                              "columnId",
+                              "op"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "chartColumn"
+                                ]
+                              },
+                              "tileId": {
+                                "type": "string"
+                              },
+                              "mode": {
+                                "oneOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "any"
+                                    ]
+                                  },
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "all"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "columnId": {
+                                "type": "string"
+                              },
+                              "op": {
+                                "type": "string",
+                                "enum": [
+                                  "Equals",
+                                  "GreaterThan",
+                                  "GreaterThanEq",
+                                  "LessThan",
+                                  "LessThanEq",
+                                  "NotEquals",
+                                  "IsNotNull",
+                                  "IsNull",
+                                  "Contains",
+                                  "StartsWith",
+                                  "EndsWith"
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "null"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "bool"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "number"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "integer"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "string"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "datetime"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "error"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "record"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "array"
+                                        ]
+                                      },
+                                      "val": {
+                                        "oneOf": [
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "boolArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "boolean",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "numberArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bigintArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "stringArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "datetimeArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "number",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "bytesArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "required": [
+                                              "type",
+                                              "data"
+                                            ],
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "variantArr"
+                                                ]
+                                              },
+                                              "data": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": [
+                                                    "string",
+                                                    "null"
+                                                  ]
+                                                }
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "type",
+                                      "val"
+                                    ],
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "variant"
+                                        ]
+                                      },
+                                      "val": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "type": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "alertConfig": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "window"
+          ],
+          "properties": {
+            "window": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "volume": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "notificationName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dashboardSettings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "filters": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "required": [
+                  "id",
+                  "filterStr"
+                ],
+                "properties": {
+                  "id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "filterStr": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "variableValues": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean"
+                        ]
+                      },
+                      "value": {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number"
+                        ]
+                      },
+                      "value": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text"
+                        ]
+                      },
+                      "value": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date"
+                        ]
+                      },
+                      "value": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "date"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "fixed"
+                                ]
+                              },
+                              "date": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "unit",
+                              "x"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "prior",
+                                  "next"
+                                ]
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "year",
+                                  "quarter",
+                                  "month",
+                                  "week",
+                                  "isoWeek",
+                                  "day",
+                                  "hour",
+                                  "minute",
+                                  "second"
+                                ]
+                              },
+                              "x": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-list"
+                        ]
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text-list"
+                        ]
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-list"
+                        ]
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean-list"
+                        ]
+                      },
+                      "value": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "true",
+                              "false"
+                            ],
+                            "properties": {
+                              "true": {
+                                "type": "boolean"
+                              },
+                              "false": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "null": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "min",
+                      "max"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-range"
+                        ]
+                      },
+                      "min": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "date"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "fixed"
+                                ]
+                              },
+                              "date": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "unit",
+                              "x"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "prior",
+                                  "next"
+                                ]
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "year",
+                                  "quarter",
+                                  "month",
+                                  "week",
+                                  "isoWeek",
+                                  "day",
+                                  "hour",
+                                  "minute",
+                                  "second"
+                                ]
+                              },
+                              "x": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "max": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "date"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "fixed"
+                                ]
+                              },
+                              "date": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "type",
+                              "unit",
+                              "x"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "prior",
+                                  "next"
+                                ]
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "year",
+                                  "quarter",
+                                  "month",
+                                  "week",
+                                  "isoWeek",
+                                  "day",
+                                  "hour",
+                                  "minute",
+                                  "second"
+                                ]
+                              },
+                              "x": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "min",
+                      "max"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-range"
+                        ]
+                      },
+                      "min": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "max": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean-null"
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "dynamicExportSettings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "variables": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-list"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text-list"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-list"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean-list"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-range"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-range"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "date-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "number-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "text-null"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "type"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "boolean-null"
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "dynamicRecipientSettings": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "sourceNodeId",
+            "recipientColumnId"
+          ],
+          "properties": {
+            "sourceNodeId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipientColumnId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "rowLimit": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "workbookVariant": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "tagId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "exploreKey": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "bookmarkId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "embedOpts": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "embedId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evalConnectionId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "formatting": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "pivotHeaderStyle": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "isSuspended": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "ownerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastUpdatedByUser": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disabledAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "disabledBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user who created this object."
+    },
+    "updatedBy": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The identifier of the user or process that last updated this object."
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was created."
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the object was last updated."
+    }
+  },
+  "required": [
+    "configV2",
+    "createdAt",
+    "createdBy",
+    "disabledAt",
+    "disabledBy",
+    "isSuspended",
+    "lastUpdatedByUser",
+    "ownerId",
+    "schedule",
+    "scheduledNotificationId",
+    "updatedAt",
+    "updatedBy",
+    "workbookId"
+  ]
+}
