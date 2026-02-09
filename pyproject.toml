@@ -31,7 +31,6 @@ dependencies = [
   "singer-sdk~=0.53.4",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
-
 urls.Homepage = "https://github.com/yourusername/tap-sigma"
 urls.Repository = "https://github.com/yourusername/tap-sigma"
 scripts.tap-sigma = "tap_sigma.tap:TapSigma.cli"
