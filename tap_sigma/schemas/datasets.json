@@ -11,7 +11,12 @@
     "updatedAt",
     "name",
     "description",
-    "url"
+    "url",
+    "owner",
+    "referenceCount",
+    "path",
+    "migrationToDataModel",
+    "migrationStatus"
   ],
   "properties": {
     "datasetId": {
@@ -63,6 +68,77 @@
         "string",
         "null"
       ]
+    },
+    "owner": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "referenceCount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Count of inbound references to the dataset",
+      "title": "Reference count"
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Path describing dataset's ancestor workspace and folders",
+      "title": "Path"
+    },
+    "migrationToDataModel": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "dataModelId",
+        "dataModelUrl",
+        "migratedAt",
+        "migratedBy"
+      ],
+      "properties": {
+        "dataModelId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dataModelUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "migratedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "migratedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "description": "Details about migration to data model",
+      "title": "Migration to data model"
+    },
+    "migrationStatus": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "An indicator of the dataset's migration status as displayed on the dataset migration admin page.\n  - `not-required` indicates that the dataset is not used as a data source (in other words, it is not referenced by other documents) and likely does not need to be migrated to a data model.\n  - `migrated` indicates that the dataset has already been migrated to a data model\n  - `not-migrated` indicates that the dataset has not been migrated and is still in use as a data source\n        ",
+      "title": "Migration status"
     },
     "isArchived": {
       "type": [
