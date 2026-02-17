@@ -1,0 +1,47 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "versionTagId",
+    "tagName",
+    "sourceVersion",
+    "taggedAt"
+  ],
+  "properties": {
+    "versionTagId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier of the tag.",
+      "title": "Tag ID"
+    },
+    "tagName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sourceVersion": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "taggedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "_sdc_data_model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

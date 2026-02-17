@@ -297,6 +297,17 @@ class DatamodelSourcesStream(SigmaStream):
         return row
 
 
+class DataModelTagsStream(SigmaStream):
+    """Data model tags stream."""
+
+    name = "data_model_tags"
+    path = "/v2/dataModels/{_sdc_data_model_id}/tags"
+    primary_keys = ("versionTagId",)
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+
 # Workbook child streams
 class WorkbookMaterializationSchedulesStream(SigmaStream):
     """Workbook materialization schedules stream."""
