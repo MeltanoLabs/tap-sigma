@@ -63,7 +63,7 @@ def _merge_all_of(*schemas: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa: PLR0915
     """Extract schemas for all streams from the OpenAPI spec.
 
     Args:
@@ -209,6 +209,14 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:
     )
     schema["properties"]["datasetId"] = {"type": "string"}
     schemas["dataset_sources"] = schema
+
+    # Data Model child streams
+    schema = get_in(
+        _get_schema_path("/v2/dataModels/{dataModelId}/tags"),
+        spec,
+    )
+    schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
+    schemas["data_model_tags"] = schema
 
     # Workbook child streams
     schema = get_in(

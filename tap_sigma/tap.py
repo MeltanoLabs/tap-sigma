@@ -82,6 +82,7 @@ class TapSigma(Tap):
             streams.DatasetSourcesStream(self),
             # Data Model child streams
             streams.DatamodelSourcesStream(self),
+            streams.DataModelTagsStream(self),
             # Workbook child streams
             streams.WorkbookMaterializationSchedulesStream(self),
             streams.WorkbookPagesStream(self),

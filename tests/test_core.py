@@ -23,6 +23,7 @@ TestTapSigma = get_tap_test_class(
     suite_config=SuiteConfig(
         ignore_no_records_for_streams=[
             "dataset_materializations",
+            "data_model_tags",
             "tags",
             "translation_files",
         ],
