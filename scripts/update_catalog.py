@@ -254,6 +254,15 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
 
     schema = get_in(
         _get_schema_path(
+            "/v2/workbooks/{workbookId}/queries",
+            # tail=("allOf", 0, "properties", "entries", "items", "allOf"),
+        ),
+        spec,
+    )
+    schemas["workbook_queries"] = schema
+
+    schema = get_in(
+        _get_schema_path(
             "/v2/workbooks/{workbookId}/schedules",
             tail=("oneOf", 1, "properties", "entries", "items", "allOf"),
         ),
