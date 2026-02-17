@@ -253,10 +253,7 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schemas["workbook_page_elements"] = merged
 
     schema = get_in(
-        _get_schema_path(
-            "/v2/workbooks/{workbookId}/queries",
-            # tail=("allOf", 0, "properties", "entries", "items", "allOf"),
-        ),
+        _get_schema_path("/v2/workbooks/{workbookId}/queries"),
         spec,
     )
     schemas["workbook_queries"] = schema
