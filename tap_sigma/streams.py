@@ -354,7 +354,6 @@ class WorkbookPageElementsStream(SigmaStream):
     parent_stream_type = WorkbookPagesStream
 
 
-
 class WorkbookQueriesStream(SigmaStream):
     """Workbook queries stream."""
 
