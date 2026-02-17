@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 from importlib import resources
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from singer_sdk import SchemaDirectory, StreamSchema
 from singer_sdk.pagination import SinglePagePaginator
@@ -83,6 +83,15 @@ class DataModelsStream(SigmaStream):
     primary_keys = ("dataModelId",)
     replication_key = None
     schema = StreamSchema(SCHEMAS)
+
+    @override
+    def get_child_context(
+        self,
+        record: Record,
+        context: Context | None = None,
+    ) -> Context | None:
+        """Return context for child streams."""
+        return {"_sdc_data_model_id": record["dataModelId"]}
 
 
 class MembersStream(SigmaStream):
@@ -237,6 +246,55 @@ class DatasetSourcesStream(SigmaStream):
     def get_url_params(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """Get URL parameters."""
         return {}  # This endpoint expects empty NO QUERY PARAMS
+
+
+# Data Model child streams
+class DatamodelSourcesStream(SigmaStream):
+    """Dataset sources stream."""
+
+    name = "data_model_sources"
+    path = "/v2/dataModels/{_sdc_data_model_id}/sources"
+    primary_keys = ("_sdc_data_model_id", "_sdc_source_id")
+    parent_stream_type = DataModelsStream
+
+    next_page_token_jsonpath = "$.nextPageToken"  # noqa: S105
+
+    schema: ClassVar[dict[str, Any]] = {
+        "type": "object",
+        "properties": {
+            "type": {"type": ["string", "null"]},
+            # Source is a data model
+            "sourceDataModelId": {"type": ["string", "null"]},
+            "elementIds": {
+                "type": ["array", "null"],
+                "items": {"type": "string"},
+                "description": "IDs of elements that make up this data model's sources.",
+                "title": "Source element IDs",
+            },
+            "versionTagId": {"type": ["string", "null"]},
+            # Source is a dataset
+            "sourceDatasetId": {"type": ["string", "null"]},
+            # Source is a table
+            "sourceTableId": {"type": ["string", "null"]},
+            # Metadata
+            "_sdc_data_model_id": {"type": "string"},
+            "_sdc_source_id": {"type": "string"},
+        },
+    }
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record | None:
+        if data_model_id := row.pop("dataModelId", None):
+            row["sourceDataModelId"] = data_model_id
+            row["_sdc_source_id"] = data_model_id
+        if dataset_id := row.pop("datasetId", None):
+            row["sourceDatasetId"] = dataset_id
+            row["_sdc_source_id"] = dataset_id
+        if table_id := row.pop("tableId", None):
+            row["sourceTableId"] = table_id
+            row["_sdc_source_id"] = table_id
+
+        return row
 
 
 # Workbook child streams
