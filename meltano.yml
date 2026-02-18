@@ -19,11 +19,11 @@ plugins:
     - structured-logging
     settings:
     - name: client_id
-      kind: password
+      kind: string
       description: Sigma Computing API Client ID
       sensitive: true
     - name: client_secret
-      kind: password
+      kind: string
       description: Sigma Computing API Client Secret
       sensitive: true
     - name: api_url
@@ -39,3 +39,5 @@ plugins:
   - name: target-duckdb
     variant: jwills
     pip_url: target-duckdb~=0.8
+    config:
+      validate_records: true
