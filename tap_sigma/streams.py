@@ -308,6 +308,20 @@ class DataModelTagsStream(SigmaStream):
     parent_stream_type = DataModelsStream
 
 
+class DataModelMaterializationSchedulesStream(SigmaStream):
+    """Data model materialization schedules stream.
+
+    https://help.sigmacomputing.com/reference/listdatamodelmaterializationschedules
+    """
+
+    name = "data_model_materialization_schedules"
+    path = "/v2/dataModels/{_sdc_data_model_id}/materializationSchedules"
+    primary_keys = ("_sdc_data_model_id", "sheetId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+
 # Workbook child streams
 class WorkbookMaterializationSchedulesStream(SigmaStream):
     """Workbook materialization schedules stream."""

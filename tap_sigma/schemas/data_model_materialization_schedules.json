@@ -1,0 +1,70 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "sheetId",
+    "elementName",
+    "schedule",
+    "configuredAt",
+    "paused"
+  ],
+  "properties": {
+    "sheetId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier of the materialization schedule for the element",
+      "title": "Sheet ID"
+    },
+    "elementName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schedule": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "cronSpec": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Cron expression to use for the schedule"
+        },
+        "timezone": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Timezone code, for example, PST"
+        }
+      }
+    },
+    "configuredAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "paused": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "_sdc_data_model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
