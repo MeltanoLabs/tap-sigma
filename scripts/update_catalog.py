@@ -218,6 +218,14 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
     schemas["data_model_tags"] = schema
 
+    # https://help.sigmacomputing.com/reference/listdatamodelmaterializationschedules
+    schema = get_in(
+        _get_schema_path("/v2/dataModels/{dataModelId}/materializationSchedules"),
+        spec,
+    )
+    schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
+    schemas["data_model_materialization_schedules"] = schema
+
     # Workbook child streams
     schema = get_in(
         _get_schema_path(

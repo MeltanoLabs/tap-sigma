@@ -1,12 +1,15 @@
 requires_meltano: ">=4"
 send_anonymous_usage_stats: false
 project_id: tap-sigma-dev
+default_environment: dev
+environments:
+- name: dev
 
 plugins:
   extractors:
   - name: tap-sigma
     namespace: tap_sigma
-    pip_url: -e .
+    executable: .venv/bin/tap-sigma
     capabilities:
     - catalog
     - state
@@ -26,10 +29,6 @@ plugins:
     - name: start_date
       kind: date_iso8601
       description: Earliest record date to sync
-    config:
-      client_id: $SIGMA_CLIENT_ID
-      client_secret: $SIGMA_CLIENT_SECRET
-      api_url: https://aws-api.sigmacomputing.com
 
   loaders:
   - name: target-jsonl
