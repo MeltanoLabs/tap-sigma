@@ -1,4 +1,4 @@
-requires_meltano: ">=4"
+requires_meltano: '>=4'
 send_anonymous_usage_stats: false
 project_id: tap-sigma-dev
 default_environment: dev
@@ -21,9 +21,11 @@ plugins:
     - name: client_id
       kind: password
       description: Sigma Computing API Client ID
+      sensitive: true
     - name: client_secret
       kind: password
       description: Sigma Computing API Client Secret
+      sensitive: true
     - name: api_url
       description: Base API URL (e.g., https://aws-api.sigmacomputing.com)
     - name: start_date
@@ -34,3 +36,6 @@ plugins:
   - name: target-jsonl
     variant: andyh1203
     pip_url: target-jsonl
+  - name: target-duckdb
+    variant: jwills
+    pip_url: target-duckdb~=0.8
