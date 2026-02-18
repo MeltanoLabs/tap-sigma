@@ -63,35 +63,35 @@ class TapSigma(Tap):
         """Return a list of discovered streams."""
         return [
             # Top-level streams
-            streams.AccountTypesStream(self),
-            streams.ConnectionsStream(self),
-            streams.DatasetsStream(self),
-            streams.DataModelsStream(self),
-            streams.FilesStream(self),
-            streams.MembersStream(self),
-            streams.TagsStream(self),
-            streams.TeamsStream(self),
-            streams.TemplatesStream(self),
-            streams.TranslationFilesStream(self),
-            streams.UserAttributesStream(self),
-            streams.WorkbooksStream(self),
-            streams.WorkspacesStream(self),
-            # Dataset child streams
-            streams.DatasetGrantsStream(self),
-            streams.DatasetMaterializationsStream(self),
-            streams.DatasetSourcesStream(self),
-            # Data Model child streams
-            streams.DatamodelSourcesStream(self),
-            streams.DataModelTagsStream(self),
-            streams.DataModelMaterializationSchedulesStream(self),
-            # Member child streams
-            streams.MemberTeamsStream(self),
-            # Workbook child streams
-            streams.WorkbookControlsStream(self),
-            streams.WorkbookMaterializationSchedulesStream(self),
-            streams.WorkbookPagesStream(self),
-            streams.WorkbookPageElementsStream(self),
-            streams.WorkbookSchedulesStream(self),
+            streams.generic.AccountTypesStream(self),
+            streams.generic.ConnectionsStream(self),
+            streams.generic.FilesStream(self),
+            streams.generic.TagsStream(self),
+            streams.generic.TeamsStream(self),
+            streams.generic.TemplatesStream(self),
+            streams.generic.TranslationFilesStream(self),
+            streams.generic.UserAttributesStream(self),
+            streams.generic.WorkspacesStream(self),
+            # Dataset streams
+            streams.datasets.DatasetsStream(self),
+            streams.datasets.DatasetGrantsStream(self),
+            streams.datasets.DatasetMaterializationsStream(self),
+            streams.datasets.DatasetSourcesStream(self),
+            # Data Model streams
+            streams.data_models.DataModelsStream(self),
+            streams.data_models.DatamodelSourcesStream(self),
+            streams.data_models.DataModelTagsStream(self),
+            streams.data_models.DataModelMaterializationSchedulesStream(self),
+            # Member streams
+            streams.members.MembersStream(self),
+            streams.members.MemberTeamsStream(self),
+            # Workbook streams
+            streams.workbooks.WorkbooksStream(self),
+            streams.workbooks.WorkbookControlsStream(self),
+            streams.workbooks.WorkbookMaterializationSchedulesStream(self),
+            streams.workbooks.WorkbookPagesStream(self),
+            streams.workbooks.WorkbookPageElementsStream(self),
+            streams.workbooks.WorkbookSchedulesStream(self),
         ]
 
 
