@@ -18,6 +18,8 @@ else:
     from typing_extensions import override
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from singer_sdk.helpers.types import Context, Record
 
 
@@ -111,6 +113,14 @@ class MembersStream(SigmaStream):
             "includeArchived": "true",
             "includeInactive": "true",
         }
+
+    @override
+    def generate_child_contexts(
+        self,
+        record: Record,
+        context: Context | None,
+    ) -> Iterable[Context | None]:
+        yield {"memberId": record["memberId"]}
 
 
 class TeamsStream(SigmaStream):
@@ -320,6 +330,22 @@ class DataModelMaterializationSchedulesStream(SigmaStream):
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = DataModelsStream
+
+
+# Member child streams
+class MemberTeamsStream(SigmaStream):
+    """Member teams stream.
+
+    https://help.sigmacomputing.com/reference/listmemberteams
+    """
+
+    name = "member_teams"
+    # https://api.sigmacomputing.com/v2/members/{memberId}/teams
+    path = "/v2/members/{memberId}/teams"
+    primary_keys = ("memberId", "teamId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = MembersStream
 
 
 # Workbook child streams
