@@ -323,6 +323,20 @@ class DataModelMaterializationSchedulesStream(SigmaStream):
 
 
 # Workbook child streams
+class WorkbookControlsStream(SigmaStream):
+    """Workbook controls stream.
+
+    https://help.sigmacomputing.com/reference/getworkbookcontrols
+    """
+
+    name = "workbook_controls"
+    path = "/v2/workbooks/{workbookId}/controls"
+    primary_keys = ("workbookId", "name")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
 class WorkbookMaterializationSchedulesStream(SigmaStream):
     """Workbook materialization schedules stream."""
 

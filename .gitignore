@@ -86,6 +86,7 @@ poetry.lock
 # Meltano
 .meltano/
 meltano.yml
+output/**
 
 # Snowflake configs
 snowflake-config.json
