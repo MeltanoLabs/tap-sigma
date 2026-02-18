@@ -308,7 +308,6 @@ class DataModelTagsStream(SigmaStream):
     parent_stream_type = DataModelsStream
 
 
-
 class DataModelMaterializationSchedulesStream(SigmaStream):
     """Data model materialization schedules stream.
 
