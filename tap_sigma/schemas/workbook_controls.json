@@ -1,0 +1,30 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "name",
+    "valueType"
+  ],
+  "properties": {
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "valueType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
