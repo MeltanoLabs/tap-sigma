@@ -109,7 +109,7 @@ class WorkbookQueriesStream(SigmaStream):
 
     name = "workbook_queries"
     path = "/v2/workbooks/{workbookId}/queries"
-    primary_keys = ("workbookId", "queryId")
+    primary_keys = ("workbookId", "elementId")
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream

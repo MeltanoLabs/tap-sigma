@@ -3,9 +3,6 @@
     "object",
     "null"
   ],
-  "required": [
-    "elementId"
-  ],
   "properties": {
     "elementId": {
       "type": [
@@ -30,6 +27,15 @@
         "string",
         "null"
       ]
+    },
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
-  }
+  },
+  "required": [
+    "elementId"
+  ]
 }
