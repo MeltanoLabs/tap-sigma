@@ -39,6 +39,9 @@ class DataModelsStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
+        if record.get("isArchived"):  # Skip archived data models
+            return None
+
         return {"_sdc_data_model_id": record["dataModelId"]}
 
 
