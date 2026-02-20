@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -46,6 +46,25 @@ class DataModelsStream(SigmaStream):
 
 
 # Data Model child streams
+class DataModelColumnsStream(SigmaStream):
+    """Data model columns stream.
+
+    https://help.sigmacomputing.com/reference/getworkbookcolumns
+    """
+
+    name = "data_model_columns"
+    path = "/v2/dataModels/{_sdc_data_model_id}/columns"
+    primary_keys = ("_sdc_data_model_id", "elementId", "columnId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+    @override
+    def get_new_paginator(self) -> SigmaStringPagePaginator:
+        """Get a new paginator."""
+        return SigmaStringPagePaginator(start_value=None)
+
+
 class DataModelElementsStream(SigmaStream):
     """Data model elements stream.
 
