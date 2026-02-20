@@ -43,6 +43,62 @@ class DataModelsStream(SigmaStream):
 
 
 # Data Model child streams
+class DataModelLineageStream(SigmaStream):
+    """Data model lineage stream."""
+
+    name = "data_model_lineage"
+    path = "/v2/dataModels/{_sdc_data_model_id}/lineage"
+    primary_keys = ("_sdc_data_model_id", "_sdc_source_id")
+    replication_key = None
+    parent_stream_type = DataModelsStream
+
+    schema: ClassVar[dict[str, Any]] = {
+        "type": "object",
+        "properties": {
+            "type": {"type": "string"},
+            # Element details
+            "sourceIds": {
+                "type": ["array", "null"],
+                "items": {"type": "string"},
+                "description": "List of direct sources for the element. Either element IDs or data source IDs.",  # noqa: E501
+            },
+            "elementId": {
+                "type": ["string", "null"],
+                "description": "Unique identifier of the element",
+            },
+            "dataSourceIds": {
+                "type": ["array", "null"],
+                "items": {"type": "string"},
+                "description": "List of root sources for the element as data source IDs.",
+            },
+            # Source data model details
+            "connectionId": {"type": ["string", "null"]},
+            "name": {"type": ["string", "null"]},
+            "dataModelId": {"type": ["string", "null"]},
+            # Source table or dataset details
+            "inodeId": {"type": ["string", "null"]},
+            # Source custom SQL details
+            "definition": {"type": ["string", "null"]},
+            # Metadata
+            "_sdc_data_model_id": {"type": "string"},
+            "_sdc_source_id": {"type": "string"},
+        },
+    }
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record | None:
+        if element_id := row.pop("elementId", None):
+            row["_sdc_source_id"] = element_id
+        if data_model_id := row.pop("dataModelId", None):
+            row["_sdc_source_id"] = data_model_id
+        if inode_id := row.pop("inodeId", None):
+            row["_sdc_source_id"] = inode_id
+        if definition := row.pop("definition", None):
+            row["_sdc_source_id"] = definition
+
+        return row
+
+
 class DatamodelSourcesStream(SigmaStream):
     """Dataset sources stream."""
 
