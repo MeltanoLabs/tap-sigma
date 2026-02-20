@@ -88,6 +88,7 @@ class TapSigma(Tap):
             # Workbook streams
             streams.workbooks.WorkbooksStream(self),
             streams.workbooks.WorkbookControlsStream(self),
+            streams.workbooks.WorkbookLineageStream(self),
             streams.workbooks.WorkbookMaterializationSchedulesStream(self),
             streams.workbooks.WorkbookPagesStream(self),
             streams.workbooks.WorkbookPageElementsStream(self),
