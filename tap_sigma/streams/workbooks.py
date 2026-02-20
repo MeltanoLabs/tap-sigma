@@ -59,6 +59,20 @@ class WorkbookControlsStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
+class WorkbookElementsStream(SigmaStream):
+    """Workbook elements stream.
+
+    https://help.sigmacomputing.com/reference/listworkbookelements
+    """
+
+    name = "workbook_elements"
+    path = "/v2/workbooks/{workbookId}/elements"
+    primary_keys = ("workbookId", "elementId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
 class WorkbookMaterializationSchedulesStream(SigmaStream):
     """Workbook materialization schedules stream."""
 
