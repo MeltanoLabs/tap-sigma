@@ -1,0 +1,48 @@
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "required": [
+    "columnId",
+    "name",
+    "formula",
+    "elementId"
+  ],
+  "properties": {
+    "columnId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Column ID"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Column name"
+    },
+    "formula": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Column formula or source column reference."
+    },
+    "elementId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Element ID"
+    },
+    "workbookId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

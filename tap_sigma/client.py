@@ -37,6 +37,15 @@ class SigmaPaginator(BaseAPIPaginator[int]):
         return int(next_page) if next_page else None
 
 
+class SigmaStringPagePaginator(BaseAPIPaginator[str | None]):
+    """Paginator for Sigma Computing API."""
+
+    @override
+    def get_next(self, response: requests.Response) -> str | None:
+        """Get next page number."""
+        return response.json().get("nextPage")
+
+
 class SigmaStream(RESTStream):
     """Base stream class for Sigma Computing API."""
 
