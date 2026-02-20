@@ -79,6 +79,7 @@ class TapSigma(Tap):
             streams.datasets.DatasetSourcesStream(self),
             # Data Model streams
             streams.data_models.DataModelsStream(self),
+            streams.data_models.DataModelElementsStream(self),
             streams.data_models.DatamodelSourcesStream(self),
             streams.data_models.DataModelTagsStream(self),
             streams.data_models.DataModelMaterializationSchedulesStream(self),
