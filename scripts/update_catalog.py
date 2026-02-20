@@ -218,7 +218,37 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
     schemas["data_model_tags"] = schema
 
+    # https://help.sigmacomputing.com/reference/listdatamodelmaterializationschedules
+    schema = get_in(
+        _get_schema_path("/v2/dataModels/{dataModelId}/materializationSchedules"),
+        spec,
+    )
+    schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
+    schemas["data_model_materialization_schedules"] = schema
+
+    # Member child streams
+    # https://help.sigmacomputing.com/reference/listmemberteams
+    schema = get_in(
+        _get_schema_path(
+            "/v2/members/{memberId}/teams",
+            tail=("allOf", 0, "properties", "entries", "items", "allOf"),
+        ),
+        spec,
+    )
+    merged = _merge_all_of(*schema)
+    merged["properties"]["memberId"] = {"type": "string"}
+    schemas["member_teams"] = merged
+
     # Workbook child streams
+    # https://help.sigmacomputing.com/reference/getworkbookcontrols
+    schema = get_in(
+        _get_schema_path("/v2/workbooks/{workbookId}/controls"),
+        spec,
+    )
+    schema["properties"]["workbookId"] = {"type": "string"}
+    schema["properties"]["valueType"] = {"type": ["string", "null"]}
+    schemas["workbook_controls"] = schema
+
     schema = get_in(
         _get_schema_path(
             "/v2/workbooks/{workbookId}/materialization-schedules",
