@@ -252,6 +252,14 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schemas["member_teams"] = merged
 
     # Workbook child streams
+    # https://help.sigmacomputing.com/reference/getworkbookcolumns
+    schema = get_in(
+        _get_schema_path("/v2/workbooks/{workbookId}/columns"),
+        spec,
+    )
+    schema["properties"]["workbookId"] = {"type": "string"}
+    schemas["workbook_columns"] = schema
+
     # https://help.sigmacomputing.com/reference/getworkbookcontrols
     schema = get_in(
         _get_schema_path("/v2/workbooks/{workbookId}/controls"),
