@@ -211,6 +211,18 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schemas["dataset_sources"] = schema
 
     # Data Model child streams
+    # https://help.sigmacomputing.com/reference/listdatamodelelements
+    schema = get_in(
+        _get_schema_path(
+            "/v2/dataModels/{dataModelId}/elements",
+            tail=("allOf", 0, "properties", "entries", "items", "allOf"),
+        ),
+        spec,
+    )
+    merged = _merge_all_of(*schema)
+    merged["properties"]["_sdc_data_model_id"] = {"type": "string"}
+    schemas["data_model_elements"] = merged
+
     schema = get_in(
         _get_schema_path("/v2/dataModels/{dataModelId}/tags"),
         spec,
@@ -240,6 +252,14 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schemas["member_teams"] = merged
 
     # Workbook child streams
+    # https://help.sigmacomputing.com/reference/getworkbookcolumns
+    schema = get_in(
+        _get_schema_path("/v2/workbooks/{workbookId}/columns"),
+        spec,
+    )
+    schema["properties"]["workbookId"] = {"type": "string"}
+    schemas["workbook_columns"] = schema
+
     # https://help.sigmacomputing.com/reference/getworkbookcontrols
     schema = get_in(
         _get_schema_path("/v2/workbooks/{workbookId}/controls"),
@@ -248,6 +268,18 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schema["properties"]["workbookId"] = {"type": "string"}
     schema["properties"]["valueType"] = {"type": ["string", "null"]}
     schemas["workbook_controls"] = schema
+
+    # https://help.sigmacomputing.com/reference/listworkbookelements
+    schema = get_in(
+        _get_schema_path(
+            "/v2/workbooks/{workbookId}/elements",
+            tail=("allOf", 0, "properties", "entries", "items", "allOf"),
+        ),
+        spec,
+    )
+    merged = _merge_all_of(*schema)
+    merged["properties"]["workbookId"] = {"type": "string"}
+    schemas["workbook_elements"] = merged
 
     schema = get_in(
         _get_schema_path(

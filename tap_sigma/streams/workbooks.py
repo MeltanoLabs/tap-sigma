@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -45,6 +45,25 @@ class WorkbooksStream(SigmaStream):
 
 
 # Workbook child streams
+class WorkbookColumnsStream(SigmaStream):
+    """Workbook columns stream.
+
+    https://help.sigmacomputing.com/reference/getworkbookcolumns
+    """
+
+    name = "workbook_columns"
+    path = "/v2/workbooks/{workbookId}/columns"
+    primary_keys = ("workbookId", "elementId", "columnId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+    @override
+    def get_new_paginator(self) -> SigmaStringPagePaginator:
+        """Get a new paginator."""
+        return SigmaStringPagePaginator(start_value=None)
+
+
 class WorkbookControlsStream(SigmaStream):
     """Workbook controls stream.
 
@@ -54,6 +73,20 @@ class WorkbookControlsStream(SigmaStream):
     name = "workbook_controls"
     path = "/v2/workbooks/{workbookId}/controls"
     primary_keys = ("workbookId", "name")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
+class WorkbookElementsStream(SigmaStream):
+    """Workbook elements stream.
+
+    https://help.sigmacomputing.com/reference/listworkbookelements
+    """
+
+    name = "workbook_elements"
+    path = "/v2/workbooks/{workbookId}/elements"
+    primary_keys = ("workbookId", "elementId")
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
