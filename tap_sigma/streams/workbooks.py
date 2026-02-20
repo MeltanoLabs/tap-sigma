@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 from importlib import resources
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from singer_sdk import SchemaDirectory, StreamSchema
 
@@ -38,7 +38,9 @@ class WorkbooksStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
-        _ = context  # Unused
+        if record.get("isArchived"):  # Skip archived workbooks
+            return None
+
         return {"workbookId": record["workbookId"]}
 
 
@@ -111,3 +113,60 @@ class WorkbookSchedulesStream(SigmaStream):
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
+
+
+class WorkbookSourcesStream(SigmaStream):
+    """Workbook sources stream.
+
+    https://help.sigmacomputing.com/reference/getworkbooksources
+    """
+
+    name = "workbook_sources"
+    path = "/v2/workbooks/{workbookId}/sources"
+    primary_keys = ("workbookId", "sourceId")
+    replication_key = None
+    parent_stream_type = WorkbooksStream
+
+    schema: ClassVar[dict[str, Any]] = {
+        "type": "object",
+        "properties": {
+            "type": {"type": ["string", "null"]},
+            # Source is a data model
+            "sourceDataModelId": {"type": ["string", "null"]},
+            "elementIds": {
+                "type": ["array", "null"],
+                "items": {"type": "string"},
+                "description": "IDs of elements that make up this data model's sources.",
+                "title": "Source element IDs",
+            },
+            "versionTagId": {"type": ["string", "null"]},
+            # Source is a dataset
+            "sourceDatasetId": {"type": ["string", "null"]},
+            # Source is a table
+            "sourceTableId": {"type": ["string", "null"]},
+            # Metadata
+            "_sdc_data_model_id": {"type": "string"},
+            "_sdc_source_id": {"type": "string"},
+        },
+    }
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record | None:
+        source_type = row["type"]
+        if data_model_id := row.pop("dataModelId", None):
+            row["sourceDataModelId"] = data_model_id
+            row["_sdc_source_id"] = data_model_id
+        if inode_id := row.pop("inodeId", None):
+            key = "sourceDatasetId" if source_type == "dataset" else "sourceTableId"
+            row[key] = inode_id
+            row["_sdc_source_id"] = inode_id
+
+        return row
+
+    @override
+    def get_url_params(
+        self,
+        context: Context | None = None,
+        next_page_token: int | None = None,
+    ) -> dict[str, Any]:
+        return {}
