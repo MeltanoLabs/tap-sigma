@@ -38,7 +38,9 @@ class WorkbooksStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
-        _ = context  # Unused
+        if record.get("isArchived"):  # Skip archived workbooks
+            return None
+
         return {"workbookId": record["workbookId"]}
 
 
