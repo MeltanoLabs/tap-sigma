@@ -121,7 +121,7 @@ class SigmaChildStream(SigmaStream):
             yield from super().request_records(context)
         except SkippableAPIError:
             self.logger.warning(
-                "Skipping %s for context %s: %s",
+                "Skipping %s for context %s",
                 self.name,
                 context,
                 exc_info=True,
