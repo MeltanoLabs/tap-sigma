@@ -132,7 +132,7 @@ class DataModelElementsStream(SigmaChildStream):
             row["_sdc_source_id"] = definition
 
         return row
-    
+
 
 class DataModelSourcesStream(SigmaChildStream):
     """Dataset sources stream."""
