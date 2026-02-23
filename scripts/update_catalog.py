@@ -211,6 +211,14 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
     schemas["dataset_sources"] = schema
 
     # Data Model child streams
+    # https://help.sigmacomputing.com/reference/getdatamodelcolumns
+    schema = get_in(
+        _get_schema_path("/v2/dataModels/{dataModelId}/columns"),
+        spec,
+    )
+    schema["properties"]["_sdc_data_model_id"] = {"type": "string"}
+    schemas["data_model_columns"] = schema
+
     # https://help.sigmacomputing.com/reference/listdatamodelelements
     schema = get_in(
         _get_schema_path(
