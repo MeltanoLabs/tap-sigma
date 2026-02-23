@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaChildStream, SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -39,11 +39,46 @@ class DataModelsStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
+        if record.get("isArchived"):  # Skip archived data models
+            return None
+
         return {"_sdc_data_model_id": record["dataModelId"]}
 
 
 # Data Model child streams
-class DataModelLineageStream(SigmaStream):
+class DataModelColumnsStream(SigmaChildStream):
+    """Data model columns stream.
+
+    https://help.sigmacomputing.com/reference/getworkbookcolumns
+    """
+
+    name = "data_model_columns"
+    path = "/v2/dataModels/{_sdc_data_model_id}/columns"
+    primary_keys = ("_sdc_data_model_id", "elementId", "columnId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+    @override
+    def get_new_paginator(self) -> SigmaStringPagePaginator:
+        """Get a new paginator."""
+        return SigmaStringPagePaginator(start_value=None)
+
+
+class DataModelElementsStream(SigmaChildStream):
+    """Data model elements stream.
+
+    https://help.sigmacomputing.com/reference/listdatamodelelements
+    """
+
+    name = "data_model_elements"
+    path = "/v2/dataModels/{_sdc_data_model_id}/elements"
+    primary_keys = ("_sdc_data_model_id", "elementId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+    class DataModelLineageStream(SigmaChildStream):
     """Data model lineage stream."""
 
     name = "data_model_lineage"
@@ -97,9 +132,9 @@ class DataModelLineageStream(SigmaStream):
             row["_sdc_source_id"] = definition
 
         return row
+    
 
-
-class DatamodelSourcesStream(SigmaStream):
+class DataModelSourcesStream(SigmaChildStream):
     """Dataset sources stream."""
 
     name = "data_model_sources"
@@ -147,7 +182,7 @@ class DatamodelSourcesStream(SigmaStream):
         return row
 
 
-class DataModelTagsStream(SigmaStream):
+class DataModelTagsStream(SigmaChildStream):
     """Data model tags stream."""
 
     name = "data_model_tags"
@@ -158,7 +193,7 @@ class DataModelTagsStream(SigmaStream):
     parent_stream_type = DataModelsStream
 
 
-class DataModelMaterializationSchedulesStream(SigmaStream):
+class DataModelMaterializationSchedulesStream(SigmaChildStream):
     """Data model materialization schedules stream.
 
     https://help.sigmacomputing.com/reference/listdatamodelmaterializationschedules

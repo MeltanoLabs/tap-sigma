@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaChildStream, SigmaStream
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -53,7 +53,7 @@ class MembersStream(SigmaStream):
 
 
 # Member child streams
-class MemberTeamsStream(SigmaStream):
+class MemberTeamsStream(SigmaChildStream):
     """Member teams stream.
 
     https://help.sigmacomputing.com/reference/listmemberteams
