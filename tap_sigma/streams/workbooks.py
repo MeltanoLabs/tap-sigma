@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream, SigmaStringPagePaginator
+from tap_sigma.client import SigmaChildStream, SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -45,7 +45,7 @@ class WorkbooksStream(SigmaStream):
 
 
 # Workbook child streams
-class WorkbookColumnsStream(SigmaStream):
+class WorkbookColumnsStream(SigmaChildStream):
     """Workbook columns stream.
 
     https://help.sigmacomputing.com/reference/getworkbookcolumns
@@ -64,7 +64,7 @@ class WorkbookColumnsStream(SigmaStream):
         return SigmaStringPagePaginator(start_value=None)
 
 
-class WorkbookControlsStream(SigmaStream):
+class WorkbookControlsStream(SigmaChildStream):
     """Workbook controls stream.
 
     https://help.sigmacomputing.com/reference/getworkbookcontrols
@@ -78,7 +78,7 @@ class WorkbookControlsStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookElementsStream(SigmaStream):
+class WorkbookElementsStream(SigmaChildStream):
     """Workbook elements stream.
 
     https://help.sigmacomputing.com/reference/listworkbookelements
@@ -92,7 +92,7 @@ class WorkbookElementsStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookMaterializationSchedulesStream(SigmaStream):
+class WorkbookMaterializationSchedulesStream(SigmaChildStream):
     """Workbook materialization schedules stream."""
 
     name = "workbook_materialization_schedules"
@@ -103,7 +103,7 @@ class WorkbookMaterializationSchedulesStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookPagesStream(SigmaStream):
+class WorkbookPagesStream(SigmaChildStream):
     """Workbook pages stream (child of workbooks)."""
 
     name = "workbook_pages"
@@ -126,7 +126,7 @@ class WorkbookPagesStream(SigmaStream):
         }
 
 
-class WorkbookPageElementsStream(SigmaStream):
+class WorkbookPageElementsStream(SigmaChildStream):
     """Workbook page elements stream."""
 
     name = "workbook_page_elements"
@@ -137,7 +137,7 @@ class WorkbookPageElementsStream(SigmaStream):
     parent_stream_type = WorkbookPagesStream
 
 
-class WorkbookQueriesStream(SigmaStream):
+class WorkbookQueriesStream(SigmaChildStream):
     """Workbook queries stream."""
 
     name = "workbook_queries"
@@ -148,7 +148,7 @@ class WorkbookQueriesStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookSchedulesStream(SigmaStream):
+class WorkbookSchedulesStream(SigmaChildStream):
     """Workbook schedules stream."""
 
     name = "workbook_schedules"
