@@ -78,7 +78,8 @@ class DataModelElementsStream(SigmaChildStream):
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = DataModelsStream
 
-    class DataModelLineageStream(SigmaChildStream):
+
+class DataModelLineageStream(SigmaChildStream):
     """Data model lineage stream."""
 
     name = "data_model_lineage"
