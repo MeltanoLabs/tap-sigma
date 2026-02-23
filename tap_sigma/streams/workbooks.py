@@ -137,6 +137,17 @@ class WorkbookPageElementsStream(SigmaStream):
     parent_stream_type = WorkbookPagesStream
 
 
+class WorkbookQueriesStream(SigmaStream):
+    """Workbook queries stream."""
+
+    name = "workbook_queries"
+    path = "/v2/workbooks/{workbookId}/queries"
+    primary_keys = ("workbookId", "elementId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
 class WorkbookSchedulesStream(SigmaStream):
     """Workbook schedules stream."""
 

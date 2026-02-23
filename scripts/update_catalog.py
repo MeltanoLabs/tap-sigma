@@ -316,6 +316,17 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
 
     schema = get_in(
         _get_schema_path(
+            "/v2/workbooks/{workbookId}/queries",
+            tail=("allOf", 0, "properties", "entries", "items", "allOf"),
+        ),
+        spec,
+    )
+    merged = _merge_all_of(*schema)
+    merged["properties"]["workbookId"] = {"type": "string"}
+    schemas["workbook_queries"] = merged
+
+    schema = get_in(
+        _get_schema_path(
             "/v2/workbooks/{workbookId}/schedules",
             tail=("oneOf", 1, "properties", "entries", "items", "allOf"),
         ),
