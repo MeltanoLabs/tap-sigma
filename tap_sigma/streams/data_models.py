@@ -80,7 +80,10 @@ class DataModelElementsStream(SigmaChildStream):
 
 
 class DataModelLineageStream(SigmaChildStream):
-    """Data model lineage stream."""
+    """Data model lineage stream.
+
+    https://help.sigmacomputing.com/reference/listdatamodellineagetree
+    """
 
     name = "data_model_lineage"
     path = "/v2/dataModels/{_sdc_data_model_id}/lineage"
