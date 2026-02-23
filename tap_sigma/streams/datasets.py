@@ -10,7 +10,7 @@ from singer_sdk import SchemaDirectory, StreamSchema
 from singer_sdk.pagination import SinglePagePaginator
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaChildStream, SigmaStream
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -44,7 +44,7 @@ class DatasetsStream(SigmaStream):
 
 
 # Dataset child streams
-class DatasetMaterializationsStream(SigmaStream):
+class DatasetMaterializationsStream(SigmaChildStream):
     """Dataset materializations stream."""
 
     name = "dataset_materializations"
@@ -55,7 +55,7 @@ class DatasetMaterializationsStream(SigmaStream):
     schema = StreamSchema(SCHEMAS)
 
 
-class DatasetGrantsStream(SigmaStream):
+class DatasetGrantsStream(SigmaChildStream):
     """Dataset grants stream."""
 
     name = "dataset_grants"
@@ -66,7 +66,7 @@ class DatasetGrantsStream(SigmaStream):
     parent_stream_type = DatasetsStream
 
 
-class DatasetSourcesStream(SigmaStream):
+class DatasetSourcesStream(SigmaChildStream):
     """Dataset sources stream."""
 
     name = "dataset_sources"

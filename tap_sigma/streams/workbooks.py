@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream
+from tap_sigma.client import SigmaChildStream, SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -38,12 +38,33 @@ class WorkbooksStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
-        _ = context  # Unused
+        if record.get("isArchived"):  # Skip archived workbooks
+            return None
+
         return {"workbookId": record["workbookId"]}
 
 
 # Workbook child streams
-class WorkbookControlsStream(SigmaStream):
+class WorkbookColumnsStream(SigmaChildStream):
+    """Workbook columns stream.
+
+    https://help.sigmacomputing.com/reference/getworkbookcolumns
+    """
+
+    name = "workbook_columns"
+    path = "/v2/workbooks/{workbookId}/columns"
+    primary_keys = ("workbookId", "elementId", "columnId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+    @override
+    def get_new_paginator(self) -> SigmaStringPagePaginator:
+        """Get a new paginator."""
+        return SigmaStringPagePaginator(start_value=None)
+
+
+class WorkbookControlsStream(SigmaChildStream):
     """Workbook controls stream.
 
     https://help.sigmacomputing.com/reference/getworkbookcontrols
@@ -52,6 +73,20 @@ class WorkbookControlsStream(SigmaStream):
     name = "workbook_controls"
     path = "/v2/workbooks/{workbookId}/controls"
     primary_keys = ("workbookId", "name")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
+class WorkbookElementsStream(SigmaChildStream):
+    """Workbook elements stream.
+
+    https://help.sigmacomputing.com/reference/listworkbookelements
+    """
+
+    name = "workbook_elements"
+    path = "/v2/workbooks/{workbookId}/elements"
+    primary_keys = ("workbookId", "elementId")
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
@@ -113,7 +148,7 @@ class WorkbookLineageStream(SigmaStream):
         return row
 
 
-class WorkbookMaterializationSchedulesStream(SigmaStream):
+class WorkbookMaterializationSchedulesStream(SigmaChildStream):
     """Workbook materialization schedules stream."""
 
     name = "workbook_materialization_schedules"
@@ -124,7 +159,7 @@ class WorkbookMaterializationSchedulesStream(SigmaStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookPagesStream(SigmaStream):
+class WorkbookPagesStream(SigmaChildStream):
     """Workbook pages stream (child of workbooks)."""
 
     name = "workbook_pages"
@@ -147,7 +182,7 @@ class WorkbookPagesStream(SigmaStream):
         }
 
 
-class WorkbookPageElementsStream(SigmaStream):
+class WorkbookPageElementsStream(SigmaChildStream):
     """Workbook page elements stream."""
 
     name = "workbook_page_elements"
@@ -158,7 +193,18 @@ class WorkbookPageElementsStream(SigmaStream):
     parent_stream_type = WorkbookPagesStream
 
 
-class WorkbookSchedulesStream(SigmaStream):
+class WorkbookQueriesStream(SigmaChildStream):
+    """Workbook queries stream."""
+
+    name = "workbook_queries"
+    path = "/v2/workbooks/{workbookId}/queries"
+    primary_keys = ("workbookId", "elementId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = WorkbooksStream
+
+
+class WorkbookSchedulesStream(SigmaChildStream):
     """Workbook schedules stream."""
 
     name = "workbook_schedules"
@@ -167,3 +213,60 @@ class WorkbookSchedulesStream(SigmaStream):
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
+
+
+class WorkbookSourcesStream(SigmaStream):
+    """Workbook sources stream.
+
+    https://help.sigmacomputing.com/reference/getworkbooksources
+    """
+
+    name = "workbook_sources"
+    path = "/v2/workbooks/{workbookId}/sources"
+    primary_keys = ("workbookId", "sourceId")
+    replication_key = None
+    parent_stream_type = WorkbooksStream
+
+    schema: ClassVar[dict[str, Any]] = {
+        "type": "object",
+        "properties": {
+            "type": {"type": ["string", "null"]},
+            # Source is a data model
+            "sourceDataModelId": {"type": ["string", "null"]},
+            "elementIds": {
+                "type": ["array", "null"],
+                "items": {"type": "string"},
+                "description": "IDs of elements that make up this data model's sources.",
+                "title": "Source element IDs",
+            },
+            "versionTagId": {"type": ["string", "null"]},
+            # Source is a dataset
+            "sourceDatasetId": {"type": ["string", "null"]},
+            # Source is a table
+            "sourceTableId": {"type": ["string", "null"]},
+            # Metadata
+            "_sdc_data_model_id": {"type": "string"},
+            "_sdc_source_id": {"type": "string"},
+        },
+    }
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record | None:
+        source_type = row["type"]
+        if data_model_id := row.pop("dataModelId", None):
+            row["sourceDataModelId"] = data_model_id
+            row["_sdc_source_id"] = data_model_id
+        if inode_id := row.pop("inodeId", None):
+            key = "sourceDatasetId" if source_type == "dataset" else "sourceTableId"
+            row[key] = inode_id
+            row["_sdc_source_id"] = inode_id
+
+        return row
+
+    @override
+    def get_url_params(
+        self,
+        context: Context | None = None,
+        next_page_token: int | None = None,
+    ) -> dict[str, Any]:
+        return {}

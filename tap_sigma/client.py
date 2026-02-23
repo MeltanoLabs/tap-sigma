@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from http import HTTPStatus
 from typing import TYPE_CHECKING, Any, cast
 from urllib.parse import urljoin
 
@@ -17,8 +18,14 @@ else:
     from typing_extensions import override
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     import requests
     from singer_sdk.helpers.types import Context
+
+
+class SkippableAPIError(Exception):
+    """A 4xx API error on a child stream context that should be skipped."""
 
 
 class SigmaPaginator(BaseAPIPaginator[int]):
@@ -35,6 +42,15 @@ class SigmaPaginator(BaseAPIPaginator[int]):
         """Get next page number."""
         next_page = response.json().get("nextPage")
         return int(next_page) if next_page else None
+
+
+class SigmaStringPagePaginator(BaseAPIPaginator[str | None]):
+    """Paginator for Sigma Computing API."""
+
+    @override
+    def get_next(self, response: requests.Response) -> str | None:
+        """Get next page number."""
+        return response.json().get("nextPage")
 
 
 class SigmaStream(RESTStream):
@@ -77,3 +93,36 @@ class SigmaStream(RESTStream):
         params["page"] = next_page_token
         params["limit"] = 1000
         return params
+
+
+class SigmaChildStream(SigmaStream):
+    """Base class for child streams with graceful 4xx error handling.
+
+    If the API returns a 4xx response for a given parent context, the error is
+    logged as a warning and the sync moves on to the next context instead of
+    aborting the entire run.
+    """
+
+    @override
+    def validate_response(self, response: requests.Response) -> None:
+        """Raise SkippableAPIError for 4xx responses (except 429, which the SDK retries)."""
+        if (
+            HTTPStatus.BAD_REQUEST <= response.status_code < HTTPStatus.INTERNAL_SERVER_ERROR
+            and response.status_code != HTTPStatus.TOO_MANY_REQUESTS
+        ):
+            err_msg = f"{response.status_code} {response.reason} for {response.url}"
+            raise SkippableAPIError(err_msg)
+        super().validate_response(response)
+
+    @override
+    def request_records(self, context: Context | None) -> Iterable[dict]:
+        """Yield records, skipping this context on a 4xx error."""
+        try:
+            yield from super().request_records(context)
+        except SkippableAPIError:
+            self.logger.warning(
+                "Skipping %s for context %s: %s",
+                self.name,
+                context,
+                exc_info=True,
+            )
