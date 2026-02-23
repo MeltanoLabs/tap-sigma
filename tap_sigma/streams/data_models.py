@@ -39,10 +39,27 @@ class DataModelsStream(SigmaStream):
         context: Context | None = None,
     ) -> Context | None:
         """Return context for child streams."""
+        if record.get("isArchived"):  # Skip archived data models
+            return None
+
         return {"_sdc_data_model_id": record["dataModelId"]}
 
 
 # Data Model child streams
+class DataModelElementsStream(SigmaStream):
+    """Data model elements stream.
+
+    https://help.sigmacomputing.com/reference/listdatamodelelements
+    """
+
+    name = "data_model_elements"
+    path = "/v2/dataModels/{_sdc_data_model_id}/elements"
+    primary_keys = ("_sdc_data_model_id", "elementId")
+    replication_key = None
+    schema = StreamSchema(SCHEMAS)
+    parent_stream_type = DataModelsStream
+
+
 class DatamodelSourcesStream(SigmaStream):
     """Dataset sources stream."""
 
