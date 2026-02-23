@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, ClassVar
 from singer_sdk import SchemaDirectory, StreamSchema
 
 from tap_sigma import schemas as schemas_module
-from tap_sigma.client import SigmaStream, SigmaStringPagePaginator
+from tap_sigma.client import SigmaChildStream, SigmaStream, SigmaStringPagePaginator
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -46,7 +46,7 @@ class DataModelsStream(SigmaStream):
 
 
 # Data Model child streams
-class DataModelColumnsStream(SigmaStream):
+class DataModelColumnsStream(SigmaChildStream):
     """Data model columns stream.
 
     https://help.sigmacomputing.com/reference/getworkbookcolumns
@@ -65,7 +65,7 @@ class DataModelColumnsStream(SigmaStream):
         return SigmaStringPagePaginator(start_value=None)
 
 
-class DataModelElementsStream(SigmaStream):
+class DataModelElementsStream(SigmaChildStream):
     """Data model elements stream.
 
     https://help.sigmacomputing.com/reference/listdatamodelelements
@@ -79,7 +79,7 @@ class DataModelElementsStream(SigmaStream):
     parent_stream_type = DataModelsStream
 
 
-class DatamodelSourcesStream(SigmaStream):
+class DatamodelSourcesStream(SigmaChildStream):
     """Dataset sources stream."""
 
     name = "data_model_sources"
@@ -127,7 +127,7 @@ class DatamodelSourcesStream(SigmaStream):
         return row
 
 
-class DataModelTagsStream(SigmaStream):
+class DataModelTagsStream(SigmaChildStream):
     """Data model tags stream."""
 
     name = "data_model_tags"
@@ -138,7 +138,7 @@ class DataModelTagsStream(SigmaStream):
     parent_stream_type = DataModelsStream
 
 
-class DataModelMaterializationSchedulesStream(SigmaStream):
+class DataModelMaterializationSchedulesStream(SigmaChildStream):
     """Data model materialization schedules stream.
 
     https://help.sigmacomputing.com/reference/listdatamodelmaterializationschedules
