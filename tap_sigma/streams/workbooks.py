@@ -137,7 +137,7 @@ class WorkbookPageElementsStream(SigmaChildStream):
     parent_stream_type = WorkbookPagesStream
 
 
-class WorkbookQueriesStream(SigmaChildStream):
+class WorkbookQueriesStream(SigmaChildStream, default_page_size=50):
     """Workbook queries stream."""
 
     name = "workbook_queries"
@@ -146,6 +146,11 @@ class WorkbookQueriesStream(SigmaChildStream):
     replication_key = None
     schema = StreamSchema(SCHEMAS)
     parent_stream_type = WorkbooksStream
+
+    @override
+    def get_new_paginator(self) -> SigmaStringPagePaginator:
+        """Get a new paginator."""
+        return SigmaStringPagePaginator(start_value=None)
 
 
 class WorkbookSchedulesStream(SigmaChildStream):

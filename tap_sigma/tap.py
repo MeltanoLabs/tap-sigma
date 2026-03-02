@@ -52,6 +52,19 @@ class TapSigma(Tap):
             ),
         ),
         th.Property(
+            "stream_options",
+            th.ObjectType(
+                additional_properties=th.ObjectType(
+                    th.Property(
+                        "page_size",
+                        th.IntegerType,
+                        description="The number of records to fetch per page.",
+                    ),
+                ),
+            ),
+            description="Options which change the behaviour of a specific stream.",
+        ),
+        th.Property(
             "start_date",
             th.DateTimeType,
             description="Earliest record date to sync",

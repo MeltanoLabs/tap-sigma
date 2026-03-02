@@ -28,6 +28,9 @@ plugins:
       sensitive: true
     - name: api_url
       description: Base API URL (e.g., https://aws-api.sigmacomputing.com)
+    - name: stream_options
+      kind: object
+      description: Options which change the behaviour of a specific stream.
     - name: start_date
       kind: date_iso8601
       description: Earliest record date to sync

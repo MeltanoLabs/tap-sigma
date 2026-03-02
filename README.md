@@ -36,6 +36,25 @@ The tap requires the following configuration:
 | client_secret | Yes | None | Sigma Computing API Client Secret |
 | api_url | Yes | None | Base API URL (e.g., https://aws-api.sigmacomputing.com) |
 | start_date | No | None | Starting date for incremental syncs (ISO 8601) |
+| stream_options | No | None | Options which change the behaviour of a specific stream (see [Stream Options](#stream-options)). |
+
+### Stream Options
+
+Stream options are a dictionary of stream names and their options. For example:
+
+```json
+{
+  "stream_options": {
+    "workbook_queries": {
+      "page_size": 25
+    }
+  }
+}
+```
+
+The available options for each stream are:
+
+- `page_size`: The number of records to fetch per page.
 
 ### Example Configuration
 
@@ -120,21 +139,21 @@ The tap implements automatic retry logic with exponential backoff to handle rate
 
 ### Prerequisites
 
-- Python 3.8+
-- Poetry
+- Python 3.10+
+- [uv]
 
 ### Setup
 
 ```bash
-git clone https://github.com/yourusername/tap-sigma
+git clone https://github.com/MeltanoLabs/tap-sigma
 cd tap-sigma
-poetry install
+uv sync
 ```
 
 ### Testing
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
 ### Create a Test Config
@@ -147,8 +166,8 @@ cp config.sample.json config.json
 ### Run the Tap
 
 ```bash
-poetry run tap-sigma --config config.json --discover
-poetry run tap-sigma --config config.json --catalog catalog.json
+uv run tap-sigma --config config.json --discover
+uv run tap-sigma --config config.json --catalog catalog.json
 ```
 
 ## Contributing
@@ -164,3 +183,5 @@ Apache-2.0
 - [Sigma Computing API Documentation](https://help.sigmacomputing.com/reference/get-started-sigma-api)
 - [Singer Specification](https://hub.meltano.com/singer/spec)
 - [Meltano SDK Documentation](https://sdk.meltano.com)
+
+[uv][https://docs.astral.sh/uv/]

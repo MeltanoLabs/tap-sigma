@@ -24,6 +24,9 @@ if TYPE_CHECKING:
     from singer_sdk.helpers.types import Context
 
 
+DEFAULT_PAGE_SIZE = 1000
+
+
 class SkippableAPIError(Exception):
     """A 4xx API error on a child stream context that should be skipped."""
 
@@ -57,6 +60,17 @@ class SigmaStream(RESTStream):
     """Base stream class for Sigma Computing API."""
 
     records_jsonpath = "$.entries[*]"
+    default_page_size: int
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initialize the stream."""
+        super().__init__(*args, **kwargs)
+        self._sigma_page_size: int | None = None
+
+    def __init_subclass__(cls, default_page_size: int = DEFAULT_PAGE_SIZE) -> None:
+        """Initialize the subclass."""
+        cls.default_page_size = default_page_size
+        return super().__init_subclass__()
 
     @property
     @override
@@ -79,6 +93,18 @@ class SigmaStream(RESTStream):
         """Get a new paginator."""
         return SigmaPaginator()
 
+    @property
+    def page_size(self) -> int:
+        """Return the page size for the stream."""
+        if self._sigma_page_size is None:
+            self._sigma_page_size = (
+                self.config.get("stream_options", {})
+                .get(self.name, {})
+                .get("page_size", self.default_page_size)
+            )
+            self.log("Using page size %s for %s", self._sigma_page_size, self.name)
+        return self._sigma_page_size
+
     @override
     def get_url_params(
         self,
@@ -91,7 +117,7 @@ class SigmaStream(RESTStream):
             super().get_url_params(context, next_page_token),
         )
         params["page"] = next_page_token
-        params["limit"] = 1000
+        params["limit"] = self.page_size
         return params
 
 
