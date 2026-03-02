@@ -164,7 +164,7 @@ class WorkbookSchedulesStream(SigmaChildStream):
     parent_stream_type = WorkbooksStream
 
 
-class WorkbookSourcesStream(SigmaStream):
+class WorkbookSourcesStream(SigmaChildStream):
     """Workbook sources stream.
 
     https://help.sigmacomputing.com/reference/getworkbooksources
@@ -172,7 +172,7 @@ class WorkbookSourcesStream(SigmaStream):
 
     name = "workbook_sources"
     path = "/v2/workbooks/{workbookId}/sources"
-    primary_keys = ("workbookId", "sourceId")
+    primary_keys = ("workbookId", "_sdc_source_id")
     replication_key = None
     parent_stream_type = WorkbooksStream
 
@@ -194,7 +194,7 @@ class WorkbookSourcesStream(SigmaStream):
             # Source is a table
             "sourceTableId": {"type": ["string", "null"]},
             # Metadata
-            "_sdc_data_model_id": {"type": "string"},
+            "workbookId": {"type": "string"},
             "_sdc_source_id": {"type": "string"},
         },
     }
