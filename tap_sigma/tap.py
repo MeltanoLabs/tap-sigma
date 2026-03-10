@@ -105,6 +105,7 @@ class TapSigma(Tap):
             streams.workbooks.WorkbookColumnsStream(self),
             streams.workbooks.WorkbookControlsStream(self),
             streams.workbooks.WorkbookElementsStream(self),
+            streams.workbooks.WorkbookLineageStream(self),
             streams.workbooks.WorkbookMaterializationSchedulesStream(self),
             streams.workbooks.WorkbookPagesStream(self),
             streams.workbooks.WorkbookPageElementsStream(self),
