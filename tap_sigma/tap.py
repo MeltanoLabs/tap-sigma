@@ -94,7 +94,8 @@ class TapSigma(Tap):
             streams.data_models.DataModelsStream(self),
             streams.data_models.DataModelColumnsStream(self),
             streams.data_models.DataModelElementsStream(self),
-            streams.data_models.DatamodelSourcesStream(self),
+            streams.data_models.DataModelLineageStream(self),
+            streams.data_models.DataModelSourcesStream(self),
             streams.data_models.DataModelTagsStream(self),
             streams.data_models.DataModelMaterializationSchedulesStream(self),
             # Member streams
