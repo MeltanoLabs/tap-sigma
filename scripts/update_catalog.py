@@ -98,12 +98,6 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
         spec,
     )
 
-    # Datasets
-    schemas["datasets"] = get_in(
-        _get_schema_path("/v2/datasets"),
-        spec,
-    )
-
     # Files
     schema = get_in(
         _get_schema_path(
@@ -186,29 +180,6 @@ def extract_schemas(spec: dict[str, Any]) -> dict[str, dict[str, Any]]:  # noqa:
         ),
         spec,
     )
-
-    # Dataset child streams
-    schema = get_in(
-        _get_schema_path("/v2/datasets/{datasetId}/grants"),
-        spec,
-    )
-    schema["properties"]["datasetId"] = {"type": "string"}
-    schema["properties"]["permission"] = {"type": "string"}
-    schemas["dataset_grants"] = schema
-
-    schema = get_in(
-        _get_schema_path("/v2/datasets/{datasetId}/materialization"),
-        spec,
-    )
-    schema["properties"]["datasetId"] = {"type": "string"}
-    schemas["dataset_materializations"] = schema
-
-    schema = get_in(
-        _get_schema_path("/v2/datasets/{datasetId}/sources", tail=("items",)),
-        spec,
-    )
-    schema["properties"]["datasetId"] = {"type": "string"}
-    schemas["dataset_sources"] = schema
 
     # Data Model child streams
     # https://help.sigmacomputing.com/reference/getdatamodelcolumns
