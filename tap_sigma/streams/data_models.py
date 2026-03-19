@@ -80,7 +80,7 @@ class DataModelElementsStream(SigmaChildStream):
 
 
 class DatamodelSourcesStream(SigmaChildStream):
-    """Dataset sources stream."""
+    """Data model sources stream."""
 
     name = "data_model_sources"
     path = "/v2/dataModels/{_sdc_data_model_id}/sources"

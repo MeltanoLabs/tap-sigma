@@ -85,11 +85,6 @@ class TapSigma(Tap):
             streams.generic.TranslationFilesStream(self),
             streams.generic.UserAttributesStream(self),
             streams.generic.WorkspacesStream(self),
-            # Dataset streams
-            streams.datasets.DatasetsStream(self),
-            streams.datasets.DatasetGrantsStream(self),
-            streams.datasets.DatasetMaterializationsStream(self),
-            streams.datasets.DatasetSourcesStream(self),
             # Data Model streams
             streams.data_models.DataModelsStream(self),
             streams.data_models.DataModelColumnsStream(self),

@@ -8,7 +8,7 @@ This tap extracts data from all available GET endpoints in the Sigma Computing A
 
 - **Account Management**: Account types and permissions
 - **Connections**: Data connections, connection tests, and grants
-- **Datasets & Data Models**: Dataset information, sources, and materializations
+- **Data Models**: Data model information, columns, elements, sources, and materialization schedules
 - **Users & Teams**: Organization members and team management
 - **Files & Content**: Workbooks, pages, and files
 - **Favorites & Tags**: User favorites and version tags
@@ -108,19 +108,44 @@ meltano run tap-sigma target-snowflake
 
 ## Available Streams
 
-- `account_types` - List of account types
+**Generic**
+
+- `account_types` - Account types
 - `connections` - Data connections
-- `datasets` - Dataset information
-- `data_models` - Data models
-- `members` - Organization members
-- `teams` - Teams
 - `files` - Files
-- `workbooks` - Workbooks
-- `workbook_pages` - Workbook pages (child stream)
-- `favorites` - User favorites
 - `tags` - Version tags
-- `user_attributes` - User attributes
-- `whoami` - Current user information
+- `teams` - Teams
+- `templates` - Workbook templates
+- `translation_files` - Organization translation files
+- `user_attributes` - Custom user attributes
+- `workspaces` - Workspaces
+
+**Members**
+
+- `members` - Organization members
+- `member_teams` - Teams a member belongs to (child of `members`)
+
+**Workbooks**
+
+- `workbooks` - Workbooks
+- `workbook_columns` - Workbook columns (child of `workbooks`)
+- `workbook_controls` - Workbook controls (child of `workbooks`)
+- `workbook_elements` - Workbook elements (child of `workbooks`)
+- `workbook_materialization_schedules` - Workbook materialization schedules (child of `workbooks`)
+- `workbook_pages` - Workbook pages (child of `workbooks`)
+- `workbook_page_elements` - Page elements (child of `workbook_pages`)
+- `workbook_queries` - Workbook queries (child of `workbooks`)
+- `workbook_schedules` - Workbook schedules (child of `workbooks`)
+- `workbook_sources` - Workbook sources (child of `workbooks`)
+
+**Data Models**
+
+- `data_models` - Data models
+- `data_model_columns` - Data model columns (child of `data_models`)
+- `data_model_elements` - Data model elements (child of `data_models`)
+- `data_model_materialization_schedules` - Data model materialization schedules (child of `data_models`)
+- `data_model_sources` - Data model sources (child of `data_models`)
+- `data_model_tags` - Data model tags (child of `data_models`)
 
 ## Authentication
 
@@ -184,4 +209,4 @@ Apache-2.0
 - [Singer Specification](https://hub.meltano.com/singer/spec)
 - [Meltano SDK Documentation](https://sdk.meltano.com)
 
-[uv][https://docs.astral.sh/uv/]
+[uv]: https://docs.astral.sh/uv/
