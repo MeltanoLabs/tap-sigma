@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 from http import HTTPStatus
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
 from singer_sdk.pagination import BaseAPIPaginator
@@ -112,13 +112,10 @@ class SigmaStream(RESTStream):
         next_page_token: int | None = None,
     ) -> dict[str, Any]:
         """Get URL parameters."""
-        params = cast(
-            "dict[str, Any]",
-            super().get_url_params(context, next_page_token),
-        )
-        params["page"] = next_page_token
-        params["limit"] = self.page_size
-        return params
+        return {
+            "page": next_page_token,
+            "limit": self.page_size,
+        }
 
 
 class SigmaChildStream(SigmaStream):
