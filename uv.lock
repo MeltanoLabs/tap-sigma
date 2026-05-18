@@ -1110,7 +1110,6 @@ dependencies = [
 
 [package.dev-dependencies]
 autoupdate = [
-    { name = "singer-sdk" },
     { name = "toolz" },
     { name = "urllib3" },
 ]
@@ -1131,12 +1130,13 @@ lint = [
 testing = [
     { name = "pytest" },
     { name = "requests" },
+    { name = "singer-sdk", extra = ["testing"] },
 ]
 typing = [
     { name = "mypy" },
     { name = "pytest" },
     { name = "requests" },
-    { name = "singer-sdk" },
+    { name = "singer-sdk", extra = ["testing"] },
     { name = "toolz" },
     { name = "ty" },
     { name = "urllib3" },
@@ -1152,7 +1152,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 autoupdate = [
-    { name = "singer-sdk", specifier = ">=0.54.2" },
     { name = "toolz", specifier = "~=1.1.0" },
     { name = "urllib3", specifier = ">=2.7" },
 ]
@@ -1162,8 +1161,7 @@ dev = [
     { name = "requests", specifier = ">=2.34.2" },
     { name = "requests-cache", specifier = ">=1.3.2" },
     { name = "ruff", specifier = ">=0.15.13" },
-    { name = "singer-sdk", specifier = ">=0.54.2" },
-    { name = "singer-sdk", extras = ["testing"], specifier = ">=0.54.2" },
+    { name = "singer-sdk", extras = ["testing"] },
     { name = "toolz", specifier = "~=1.1.0" },
     { name = "ty", specifier = ">=0.0.37" },
     { name = "urllib3", specifier = ">=2.7" },
@@ -1172,12 +1170,13 @@ lint = [{ name = "ruff", specifier = ">=0.15.13" }]
 testing = [
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "requests", specifier = ">=2.34.2" },
+    { name = "singer-sdk", extras = ["testing"] },
 ]
 typing = [
     { name = "mypy", specifier = ">=2.1" },
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "requests", specifier = ">=2.34.2" },
-    { name = "singer-sdk", specifier = ">=0.54.2" },
+    { name = "singer-sdk", extras = ["testing"] },
     { name = "toolz", specifier = "~=1.1.0" },
     { name = "ty", specifier = ">=0.0.37" },
     { name = "urllib3", specifier = ">=2.7" },
