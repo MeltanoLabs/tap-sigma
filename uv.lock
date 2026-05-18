@@ -1122,7 +1122,6 @@ dev = [
     { name = "singer-sdk", extra = ["testing"] },
     { name = "toolz" },
     { name = "ty" },
-    { name = "types-requests" },
     { name = "urllib3" },
 ]
 lint = [
@@ -1139,7 +1138,6 @@ typing = [
     { name = "singer-sdk" },
     { name = "toolz" },
     { name = "ty" },
-    { name = "types-requests" },
     { name = "urllib3" },
 ]
 
@@ -1167,7 +1165,6 @@ dev = [
     { name = "singer-sdk", extras = ["testing"], specifier = ">=0.50" },
     { name = "toolz", specifier = "~=1.1.0" },
     { name = "ty", specifier = ">=0.0.37" },
-    { name = "types-requests", specifier = ">=2.33.0.20260518" },
     { name = "urllib3", specifier = ">=2.7" },
 ]
 lint = [{ name = "ruff", specifier = ">=0.15.13" }]
@@ -1182,7 +1179,6 @@ typing = [
     { name = "singer-sdk", specifier = ">=0.50" },
     { name = "toolz", specifier = "~=1.1.0" },
     { name = "ty", specifier = ">=0.0.37" },
-    { name = "types-requests", specifier = ">=2.33.0.20260518" },
     { name = "urllib3", specifier = ">=2.7" },
 ]
 
@@ -1272,18 +1268,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/ac/961205863903881996adb5a6f9cfe570c132882922ac226540346f15df20/ty-0.0.37-py3-none-win32.whl", hash = "sha256:33b57e4095179f06c2ae01c334833645cad94bf7d7467e073cdc3aaabea565d3", size = 10518308, upload-time = "2026-05-16T05:57:25.824Z" },
     { url = "https://files.pythonhosted.org/packages/39/cd/f308edd0cd86e402fe3a1b5c54e0a0dfa0177d80c1557c4849510bb2a147/ty-0.0.37-py3-none-win_amd64.whl", hash = "sha256:3b159351e99cf6eed7aacfb69ae8437725d15599ac4f21c8b2e909b300498b6c", size = 11607159, upload-time = "2026-05-16T05:57:06.76Z" },
     { url = "https://files.pythonhosted.org/packages/1a/ed/5ec4b501479bc5dad55467e2fe72e797cb9c178468c0d1a514536872ebc5/ty-0.0.37-py3-none-win_arm64.whl", hash = "sha256:6c3c2b997f68c71e14242b96d48cba3c086439556af02bb4613aa458950d5c23", size = 10958817, upload-time = "2026-05-16T05:57:08.907Z" },
-]
-
-[[package]]
-name = "types-requests"
-version = "2.33.0.20260518"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "urllib3" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/e0/01/c5a19253fe1ac159159ddf9a3a07cec8bb5e486ec4d9002ad2821da0e5d2/types_requests-2.33.0.20260518.tar.gz", hash = "sha256:df7bd3bfe0ca8402dfb841e7d9be714bb5578203283d66d7dc4ef69343449a5e", size = 24752, upload-time = "2026-05-18T06:07:37.966Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/bc/b139710a3b6018f7fb2b9508b35c8af564e61bf2bf4fa619d088f3e16f85/types_requests-2.33.0.20260518-py3-none-any.whl", hash = "sha256:626d697d1adaaff76e2044dc8c5c051d8f21abc157bdfe204a75558076fe0bf0", size = 21391, upload-time = "2026-05-18T06:07:37.044Z" },
 ]
 
 [[package]]
