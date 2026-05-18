@@ -45,13 +45,13 @@ Repository = "https://github.com/MeltanoLabs/tap-sigma"
 [dependency-groups]
 dev = [
   "requests-cache>=1.3.2",
-  "singer-sdk[testing]",
+  "singer-sdk[testing]>=0.50",
   { include-group = "autoupdate" },
   { include-group = "lint" },
   { include-group = "typing" },
 ]
 autoupdate = [
-  "singer-sdk",
+  "singer-sdk>=0.50",
   "toolz~=1.1.0",
   "urllib3>=2.7",
 ]
