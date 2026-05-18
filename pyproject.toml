@@ -27,7 +27,7 @@ dynamic = [ "version" ]
 dependencies = [
   "backports-httpmethod>=0.2.1",
   "requests~=2.34",
-  "singer-sdk~=0.53.4",
+  "singer-sdk~=0.54.2",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
 [[project.authors]]
@@ -45,13 +45,13 @@ Repository = "https://github.com/MeltanoLabs/tap-sigma"
 [dependency-groups]
 dev = [
   "requests-cache>=1.3.2",
-  "singer-sdk[testing]>=0.50",
+  "singer-sdk[testing]>=0.54.2",
   { include-group = "autoupdate" },
   { include-group = "lint" },
   { include-group = "typing" },
 ]
 autoupdate = [
-  "singer-sdk>=0.50",
+  "singer-sdk>=0.54.2",
   "toolz~=1.1.0",
   "urllib3>=2.7",
 ]
