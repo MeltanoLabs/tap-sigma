@@ -26,7 +26,7 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "backports-httpmethod>=0.2.1",
-  "requests~=2.32",
+  "requests~=2.34",
   "singer-sdk~=0.53.4",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
@@ -56,16 +56,16 @@ autoupdate = [
   "urllib3>=2.7",
 ]
 lint = [
-  "ruff>=0.15.12",
+  "ruff>=0.15.13",
 ]
 testing = [
   "pytest>=9.0.3",
-  "requests>=2.32",
+  "requests>=2.34.2",
 ]
 typing = [
-  "mypy>=2",
-  "ty>=0.0.35",
-  "types-requests>=2.33.0.20260508",
+  "mypy>=2.1.0",
+  "ty>=0.0.37",
+  "types-requests>=2.33.0.20260518",
   { include-group = "autoupdate" },
   { include-group = "testing" },
 ]
