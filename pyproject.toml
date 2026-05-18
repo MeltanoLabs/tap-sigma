@@ -63,7 +63,7 @@ testing = [
   "requests>=2.34.2",
 ]
 typing = [
-  "mypy>=2.1.0",
+  "mypy>=2.1",
   "ty>=0.0.37",
   "types-requests>=2.33.0.20260518",
   { include-group = "autoupdate" },
