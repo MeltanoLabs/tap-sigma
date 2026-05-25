@@ -54,7 +54,7 @@ autoupdate = [
   "urllib3>=2.7",
 ]
 lint = [
-  "ruff>=0.15.13",
+  "ruff>=0.15.14",
 ]
 testing = [
   "pytest>=9.0.3",
@@ -63,7 +63,7 @@ testing = [
 ]
 typing = [
   "mypy>=2.1",
-  "ty>=0.0.37",
+  "ty>=0.0.39",
   { include-group = "autoupdate" },
   { include-group = "testing" },
 ]
