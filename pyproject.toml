@@ -57,7 +57,7 @@ lint = [
   "ruff>=0.15.17",
 ]
 testing = [
-  "pytest>=9.1.0",
+  "pytest>=9.1",
   "requests>=2.34.2",
   "singer-sdk[testing]",
 ]
