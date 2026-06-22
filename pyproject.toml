@@ -27,7 +27,7 @@ dynamic = [ "version" ]
 dependencies = [
   "backports-httpmethod>=0.2.1",
   "requests~=2.34",
-  "singer-sdk~=0.54.4",
+  "singer-sdk~=0.54.5",
   "typing-extensions>=4.15; python_full_version<'3.12'",
 ]
 [[project.authors]]
