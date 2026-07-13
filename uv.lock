@@ -92,14 +92,14 @@ wheels = [
 
 [[package]]
 name = "backports-httpmethod"
-version = "0.2.1"
+version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "backports-strenum", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/9a/a2d5d34f62039135fe7f876dcd6d70f98aa2b7c6946ce709b2344f658453/backports_httpmethod-0.2.1.tar.gz", hash = "sha256:dd730ceb82e646bbea5747ccdc89b670adfd1626a621282c51b1b514e89a88fe", size = 6655, upload-time = "2024-07-08T19:48:25.805Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/5d/a03be32c1659ae423bb9c15bffac7507de93b93a6a2f5b4076603e65ac08/backports_httpmethod-0.2.2.tar.gz", hash = "sha256:df62439b80a958f62c52bf5d8332587fd4198bdc4afea41d550083f503e669ec", size = 6502, upload-time = "2026-07-11T06:37:01.641Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/6e/5c6808bff6e2f34b55ca05aedc2475f14ff70388d05f4556e89085b73e7d/backports_httpmethod-0.2.1-py3-none-any.whl", hash = "sha256:0ff5d1323c6dfaaa436c69673307dbf555dc623de92d33063cf9de1cbe9ce558", size = 4111, upload-time = "2024-07-08T19:48:24.671Z" },
+    { url = "https://files.pythonhosted.org/packages/b2/75/3afabbc67d9eebea3bf37d49bac9025c0e0df78576124a83fc4a98fd052c/backports_httpmethod-0.2.2-py3-none-any.whl", hash = "sha256:05c738c1da22a8d771a4429594faef014427ad65583c1ededc97c9ea11371cf1", size = 3777, upload-time = "2026-07-11T06:37:00.424Z" },
 ]
 
 [[package]]
@@ -1148,7 +1148,7 @@ typing = [
 
 [package.metadata]
 requires-dist = [
-    { name = "backports-httpmethod", specifier = ">=0.2.1" },
+    { name = "backports-httpmethod", specifier = ">=0.2.2" },
     { name = "requests", specifier = "~=2.34" },
     { name = "singer-sdk", specifier = "~=0.54.5" },
     { name = "typing-extensions", marker = "python_full_version < '3.12'", specifier = ">=4.15" },
