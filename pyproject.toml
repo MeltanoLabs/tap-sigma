@@ -54,7 +54,7 @@ autoupdate = [
   "urllib3>=2.7",
 ]
 lint = [
-  "ruff>=0.15.20",
+  "ruff>=0.15.21",
 ]
 testing = [
   "pytest>=9.1.1",
@@ -62,8 +62,8 @@ testing = [
   "singer-sdk[testing]",
 ]
 typing = [
-  "mypy>=2.1",
-  "ty>=0.0.56",
+  "mypy>=2.2.0",
+  "ty>=0.0.59",
   { include-group = "autoupdate" },
   { include-group = "testing" },
 ]
