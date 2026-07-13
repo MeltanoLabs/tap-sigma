@@ -62,7 +62,7 @@ testing = [
   "singer-sdk[testing]",
 ]
 typing = [
-  "mypy>=2.2",
+  "mypy>=2.3.0",
   "ty>=0.0.59",
   { include-group = "autoupdate" },
   { include-group = "testing" },
