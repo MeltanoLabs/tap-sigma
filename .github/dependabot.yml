@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: uv
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: monthly
     commit-message:
       prefix: "fix(deps): "
       prefix-development: "chore(deps-dev): "
@@ -21,7 +21,7 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: quarterly
     commit-message:
       prefix: "ci: "
     groups:
