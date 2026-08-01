@@ -54,7 +54,7 @@ autoupdate = [
   "urllib3>=2.7",
 ]
 lint = [
-  "ruff>=0.16.0",
+  "ruff>=0.16",
 ]
 testing = [
   "pytest>=9.1.1",
