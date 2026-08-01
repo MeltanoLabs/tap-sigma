@@ -1,4 +1,4 @@
-"""Stream definitions for member endpoints."""
+"""Stream definitions for member endpoints."""  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 

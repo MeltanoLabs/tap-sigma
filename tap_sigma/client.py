@@ -1,4 +1,4 @@
-"""REST client handling for Sigma Computing API streams."""
+"""REST client handling for Sigma Computing API streams."""  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 

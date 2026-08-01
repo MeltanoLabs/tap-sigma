@@ -1,4 +1,4 @@
-"""Tests for tap-sigma core functionality."""
+"""Tests for tap-sigma core functionality."""  # ruff: ignore[CPY001]
 
 import os
 

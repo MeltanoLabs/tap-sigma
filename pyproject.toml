@@ -33,6 +33,7 @@ dependencies = [
 [[project.authors]]
 name = "Kevin Sampson"
 email = "k.sampson@vertexservicepartners.com"
+
 [[project.authors]]
 name = "Edgar Ramírez-Mondragón"
 email = "edgarrm358@gmail.com"

@@ -1,4 +1,4 @@
-"""Update the OpenAPI schema from the Sigma API."""  # noqa: INP001
+"""Update the OpenAPI schema from the Sigma API."""  # noqa: INP001  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 
