@@ -1,4 +1,4 @@
-"""Stream definitions for Sigma Computing API."""
+"""Stream definitions for Sigma Computing API."""  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 

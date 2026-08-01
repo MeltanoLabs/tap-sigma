@@ -1,4 +1,4 @@
-"""Authentication handler for Sigma Computing API."""
+"""Authentication handler for Sigma Computing API."""  # ruff: ignore[CPY001]
 
 import sys
 from typing import Any

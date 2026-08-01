@@ -1,4 +1,4 @@
-"""Stream definitions for workbook endpoints."""
+"""Stream definitions for workbook endpoints."""  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 

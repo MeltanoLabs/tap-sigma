@@ -33,6 +33,7 @@ dependencies = [
 [[project.authors]]
 name = "Kevin Sampson"
 email = "k.sampson@vertexservicepartners.com"
+
 [[project.authors]]
 name = "Edgar Ramírez-Mondragón"
 email = "edgarrm358@gmail.com"
@@ -54,7 +55,7 @@ autoupdate = [
   "urllib3>=2.7",
 ]
 lint = [
-  "ruff>=0.15.21",
+  "ruff>=0.16",
 ]
 testing = [
   "pytest>=9.1.1",
@@ -63,7 +64,7 @@ testing = [
 ]
 typing = [
   "mypy>=2.3",
-  "ty>=0.0.59",
+  "ty>=0.0.64",
   { include-group = "autoupdate" },
   { include-group = "testing" },
 ]

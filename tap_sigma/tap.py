@@ -1,4 +1,4 @@
-"""Sigma Computing tap class."""
+"""Sigma Computing tap class."""  # ruff: ignore[CPY001]
 
 from __future__ import annotations
 

@@ -1,1 +1,1 @@
-"""Test suite for tap-sigma."""
+"""Test suite for tap-sigma."""  # ruff: ignore[CPY001]
