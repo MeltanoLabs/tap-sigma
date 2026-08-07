@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import sys
 from importlib import resources
 from typing import TYPE_CHECKING, Any, ClassVar
@@ -106,6 +107,10 @@ class DatamodelSourcesStream(SigmaChildStream):
             "sourceDatasetId": {"type": ["string", "null"]},
             # Source is a table
             "sourceTableId": {"type": ["string", "null"]},
+            # Source is a custom SQL
+            "sourceCustomSqlId": {"type": ["string", "null"]},
+            "connectionId": {"type": ["string", "null"]},
+            "definition": {"type": ["string", "null"]},
             # Metadata
             "_sdc_data_model_id": {"type": "string"},
             "_sdc_source_id": {"type": "string"},
@@ -114,15 +119,26 @@ class DatamodelSourcesStream(SigmaChildStream):
 
     @override
     def post_process(self, row: Record, context: Context | None = None) -> Record | None:
-        if data_model_id := row.pop("dataModelId", None):
-            row["sourceDataModelId"] = data_model_id
-            row["_sdc_source_id"] = data_model_id
-        if dataset_id := row.pop("datasetId", None):
-            row["sourceDatasetId"] = dataset_id
-            row["_sdc_source_id"] = dataset_id
-        if table_id := row.pop("tableId", None):
-            row["sourceTableId"] = table_id
-            row["_sdc_source_id"] = table_id
+        match row.get("type"):
+            case "data-model":
+                row["sourceDataModelId"] = row["dataModelId"]
+                row["_sdc_source_id"] = row["dataModelId"]
+            case "dataset":
+                row["sourceDatasetId"] = row["datasetId"]
+                row["_sdc_source_id"] = row["datasetId"]
+            case "table":
+                row["sourceTableId"] = row["tableId"]
+                row["_sdc_source_id"] = row["tableId"]
+            case "custom-sql":
+                row["sourceCustomSqlId"] = row["customSqlId"]
+                row["_sdc_source_id"] = row["customSqlId"]
+            case _:
+                self.log(
+                    "Unknown data model source type '%s', skipping record.",
+                    row.get("type"),
+                    level=logging.WARNING,
+                )
+                return None
 
         return row
 
